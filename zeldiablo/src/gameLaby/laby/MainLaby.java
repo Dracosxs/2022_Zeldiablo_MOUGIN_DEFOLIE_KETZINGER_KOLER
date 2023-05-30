@@ -7,7 +7,7 @@ import java.io.IOException;
 public class MainLaby {
 
     public static void main(String[] args) throws IOException {
-        LabyJeu l = new LabyJeu("labySimple/laby1.txt");
+        LabyJeu l = new LabyJeu("labySimple/laby0.txt");
         //vérification dans le terminal que la laby est bien chargé
         for (int y = 0; y < l.getL().getLengthY(); y++) {
             // affiche la ligne
@@ -24,5 +24,6 @@ public class MainLaby {
         }
         LabyDessin ld = new LabyDessin();
         MoteurJeu.launch(l, ld);
+
     }
 }

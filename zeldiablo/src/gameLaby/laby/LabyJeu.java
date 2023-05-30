@@ -17,6 +17,21 @@ public class LabyJeu implements Jeu {
 
     @Override
     public void update(double secondes, Clavier clavier) {
+        // deplace la raquette en fonction des touches
+        if (clavier.droite) {
+            this.l.deplacerPerso("DROITE");
+        }
+
+        if (clavier.gauche) {
+            this.l.deplacerPerso("GAUCHE");
+        }
+        if (clavier.haut) {
+            this.l.deplacerPerso("HAUT");
+        }
+
+        if (clavier.bas) {
+            this.l.deplacerPerso("BAS");
+        }
 
 
     }
