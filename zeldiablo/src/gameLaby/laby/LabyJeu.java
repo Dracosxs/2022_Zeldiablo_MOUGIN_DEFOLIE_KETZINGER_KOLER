@@ -1,10 +1,12 @@
 package gameLaby.laby;
 
+import javafx.animation.Timeline;
 import moteurJeu.Clavier;
 import moteurJeu.Jeu;
 
 
 import java.io.IOException;
+import java.util.Timer;
 
 public class LabyJeu implements Jeu {
 
@@ -17,24 +19,26 @@ public class LabyJeu implements Jeu {
 
     @Override
     public void update(double secondes, Clavier clavier) {
-        // deplace la raquette en fonction des touches
-        if (clavier.droite) {
-            this.l.deplacerPerso("DROITE");
+        // deplace le personnage en fonction des touches
+            if (clavier.droite) {
+
+                this.l.deplacerPerso("Droite");
+            }
+
+            if (clavier.gauche) {
+                this.l.deplacerPerso("Gauche");
+            }
+            if (clavier.haut) {
+                this.l.deplacerPerso("Haut");
+            }
+
+            if (clavier.bas) {
+                this.l.deplacerPerso("Bas");
+            }
         }
 
-        if (clavier.gauche) {
-            this.l.deplacerPerso("GAUCHE");
-        }
-        if (clavier.haut) {
-            this.l.deplacerPerso("HAUT");
-        }
-
-        if (clavier.bas) {
-            this.l.deplacerPerso("BAS");
-        }
 
 
-    }
 
     @Override
     public void init() {
