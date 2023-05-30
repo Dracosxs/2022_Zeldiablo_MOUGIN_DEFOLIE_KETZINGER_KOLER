@@ -14,6 +14,7 @@ public class LabyDessin implements DessinJeu {
         // recupere un pinceau pour dessiner
         final GraphicsContext gc = canvas.getGraphicsContext2D();
 
+
         for (int y = 0; y < laby.getL().getLengthY(); y++) {
             // affiche la ligne
             for (int x = 0; x < laby.getL().getLength(); x++) {
