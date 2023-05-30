@@ -1,5 +1,7 @@
 package gameLaby.laby;
 
+import moteurJeu.MoteurJeu;
+
 import java.io.IOException;
 
 public class MainLaby {
@@ -20,5 +22,7 @@ public class MainLaby {
             // saut de ligne
             System.out.println();
         }
+        LabyDessin ld = new LabyDessin();
+        MoteurJeu.launch(l, ld);
     }
 }

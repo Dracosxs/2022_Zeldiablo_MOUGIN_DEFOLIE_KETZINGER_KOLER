@@ -13,24 +13,22 @@ public class LabyDessin implements DessinJeu {
 
         // recupere un pinceau pour dessiner
         final GraphicsContext gc = canvas.getGraphicsContext2D();
-        // dessin fond
-        gc.setFill(Color.LIGHTGRAY);
-        gc.fillRect(0, 0, canvas.getWidth(), canvas.getHeight());
 
 
         for (int y = 0; y < laby.getL().getLengthY(); y++) {
             // affiche la ligne
             for (int x = 0; x < laby.getL().getLength(); x++) {
-                if (laby.getL().getMur(x, y))
+                if (laby.getL().getMur(x, y)) {
                     gc.setFill(Color.BLACK);
-                    gc.fillRect(0, 0, x, y);
-                else if ((laby.getL().getPj().getX()==x) && (laby.getL().getPj().getY()==y)) {
+                    gc.fillRect(laby.tailleCase*x, laby.tailleCase*y, laby.tailleCase, laby.tailleCase);
+                }else if ((laby.getL().getPj().getX()==x) && (laby.getL().getPj().getY()==y)) {
                     gc.setFill(Color.RED);
-                    gc.fillRect(0, 0, x, y);
+                    gc.fillOval(laby.tailleCase*x, laby.tailleCase*y, laby.tailleCase, laby.tailleCase);
+                }else {
+                    gc.setFill(Color.LIGHTGRAY);
+                    gc.fillRect(laby.tailleCase*x, laby.tailleCase*y, laby.tailleCase, laby.tailleCase);
                 }
             }
-            // saut de ligne
-            System.out.println();
         }
     }
 }

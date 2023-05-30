@@ -3,13 +3,12 @@ package gameLaby.laby;
 import moteurJeu.Clavier;
 import moteurJeu.Jeu;
 
-import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
+
 import java.io.IOException;
 
 public class LabyJeu implements Jeu {
 
+    public final static int tailleCase = 50;
     private Labyrinthe l ;
 
     public LabyJeu(String nomFichier) throws IOException {
