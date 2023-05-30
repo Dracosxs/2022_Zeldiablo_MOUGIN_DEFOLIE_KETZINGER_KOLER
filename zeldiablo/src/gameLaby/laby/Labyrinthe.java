@@ -36,6 +36,8 @@ public class Labyrinthe {
      */
     public boolean[][] murs;
 
+
+
     /**
      * retourne la case suivante selon une actions
      *
@@ -194,5 +196,9 @@ public class Labyrinthe {
     public boolean getMur(int x, int y) {
         // utilise le tableau de boolean
         return this.murs[x][y];
+    }
+
+    public Perso getPj() {
+        return pj;
     }
 }

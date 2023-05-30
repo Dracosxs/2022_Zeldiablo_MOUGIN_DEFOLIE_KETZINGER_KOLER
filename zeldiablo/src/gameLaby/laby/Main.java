@@ -17,7 +17,9 @@ public class Main {
             for (int x = 0; x < laby.getLength(); x++) {
                 if (laby.getMur(x, y))
                     System.out.print('X');
-                else
+                else if ((laby.getPj().getX()==x) && (laby.getPj().getY()==y)) {
+                    System.out.print('P');
+                } else
                     System.out.print('.');
             }
             // saut de ligne
