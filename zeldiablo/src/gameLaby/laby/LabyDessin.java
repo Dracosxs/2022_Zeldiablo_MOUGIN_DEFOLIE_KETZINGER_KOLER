@@ -18,13 +18,13 @@ public class LabyDessin implements DessinJeu {
         gc.fillRect(0, 0, canvas.getWidth(), canvas.getHeight());
 
 
-        for (int y = 0; y < laby.getLengthY(); y++) {
+        for (int y = 0; y < laby.getL().getLengthY(); y++) {
             // affiche la ligne
-            for (int x = 0; x < laby.getLength(); x++) {
-                if (laby.getMur(x, y))
+            for (int x = 0; x < laby.getL().getLength(); x++) {
+                if (laby.getL().getMur(x, y))
                     gc.setFill(Color.BLACK);
                     gc.fillRect(0, 0, x, y);
-                else if ((laby.getPj().getX()==x) && (laby.getPj().getY()==y)) {
+                else if ((laby.getL().getPj().getX()==x) && (laby.getL().getPj().getY()==y)) {
                     gc.setFill(Color.RED);
                     gc.fillRect(0, 0, x, y);
                 }
