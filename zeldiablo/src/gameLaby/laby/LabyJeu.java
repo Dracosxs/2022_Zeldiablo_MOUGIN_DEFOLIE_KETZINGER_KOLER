@@ -18,7 +18,7 @@ public class LabyJeu implements Jeu {
 
     @Override
     public void update(double secondes, Clavier clavier) {
-        
+
 
     }
 
@@ -30,5 +30,9 @@ public class LabyJeu implements Jeu {
     @Override
     public boolean etreFini() {
         return false;
+    }
+
+    public Labyrinthe getL(){
+        return this.l;
     }
 }
