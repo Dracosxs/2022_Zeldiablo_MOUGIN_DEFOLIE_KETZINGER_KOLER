@@ -201,4 +201,9 @@ public class Labyrinthe {
     public Perso getPj() {
         return pj;
     }
+
+    public boolean[][] getMurs() {
+        return murs;
+    }
+
 }

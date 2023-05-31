@@ -1,5 +1,6 @@
 package gameLaby.laby;
 
+import javafx.scene.image.Image;
 import moteurJeu.MoteurJeu;
 
 import java.io.IOException;
@@ -7,6 +8,8 @@ import java.io.IOException;
 public class MainLaby {
 
     public static void main(String[] args) throws IOException {
+
+
 
         int fps = 10;
         LabyJeu l = new LabyJeu("labySimple/laby1.txt");
