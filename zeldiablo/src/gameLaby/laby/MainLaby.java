@@ -10,9 +10,9 @@ public class MainLaby {
     public static void main(String[] args) throws IOException {
 
         int fps = 10;
-        LabyJeu l = new LabyJeu("labySimple/laby1.txt");
-        int largeur = l.getL().getLength()*80;
-        int hauteur = l.getL().getLengthY()*80;
+        LabyJeu l = new LabyJeu("labySimple/laby2.txt");
+        int largeur = l.getL().getLength()*50;
+        int hauteur = l.getL().getLengthY()*50;
         //vérification dans le terminal que la laby est bien chargé
         for (int y = 0; y < l.getL().getLengthY(); y++) {
             // affiche la ligne
