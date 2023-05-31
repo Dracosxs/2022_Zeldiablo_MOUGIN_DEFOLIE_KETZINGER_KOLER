@@ -7,6 +7,7 @@ public class Monstre extends Perso {
      */
     int x, y;
 
+
     /**
      * constructeur
      *

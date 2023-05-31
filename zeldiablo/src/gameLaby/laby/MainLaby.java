@@ -11,7 +11,7 @@ public class MainLaby {
 
         int fps = 10;
 
-        LabyJeu l = new LabyJeu("labySimple/laby0.txt");
+        LabyJeu l = new LabyJeu("labySimple/laby2.txt");
         int largeur = l.getL().getLength()*50;
         int hauteur = l.getL().getLengthY()*50;
 

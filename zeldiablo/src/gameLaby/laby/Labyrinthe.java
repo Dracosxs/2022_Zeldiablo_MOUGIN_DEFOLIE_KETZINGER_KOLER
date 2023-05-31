@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 
+
 /**
  * classe labyrinthe. represente un labyrinthe avec
  * <ul> des murs </ul>
@@ -168,19 +169,42 @@ public class Labyrinthe {
     }
 
     public void deplacerMonstre(int i){
-        int deplacement = (int) Math.floor(Math.random()*4);
+        int alea = (int) Math.floor(Math.random()*4);
         String action = "";
-        if (deplacement == 0){
-            action = "Haut";
-        }
-        else if (deplacement == 1){
-            action = "Bas";
-        }
-        else if (deplacement == 2){
-            action = "Gauche";
+        if (alea == 0){
+            int deplacement = (int) Math.floor(Math.random()*4);
+            if (deplacement == 0){
+                action = "Haut";
+            }
+            else if (deplacement == 1){
+                action = "Bas";
+            }
+            else if (deplacement == 2){
+                action = "Gauche";
+            }
+            else {
+                action = "Droite";
+            }
         }
         else {
-            action = "Droite";
+            int x = this.m.get(i).getX() - this.pj.getX();
+            int y = this.m.get(i).getY() - this.pj.getY();
+            if (Math.abs(x) < Math.abs(y)){
+                if (y<0){
+                    action = "Bas";
+                }
+                else {
+                    action = "Haut";
+                }
+            }
+            else {
+                if (x<0){
+                    action = "Droite";
+                }
+                else {
+                    action = "Gauche";
+                }
+            }
         }
         // case courante
         int[] courante = {this.m.get(i).getX(), this.m.get(i).getY()};
@@ -193,7 +217,9 @@ public class Labyrinthe {
             // on met a jour personnage
             this.m.remove(i) ;
             this.m.add(i, new Monstre(suivante[0], suivante[1]));
+
         }
+
     }
 
 
@@ -252,6 +278,5 @@ public class Labyrinthe {
         }
         return present;
     }
-
 
 }
