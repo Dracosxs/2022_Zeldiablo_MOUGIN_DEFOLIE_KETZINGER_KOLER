@@ -3,6 +3,9 @@ package gameLaby.laby;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.ArrayList;
+
+
 
 /**
  * classe labyrinthe. represente un labyrinthe avec
@@ -17,6 +20,7 @@ public class Labyrinthe {
     public static final char MUR = 'X';
     public static final char PJ = 'P';
     public static final char VIDE = '.';
+    public static final char MONSTRE = 'M';
 
     /**
      * constantes actions possibles
@@ -30,6 +34,11 @@ public class Labyrinthe {
      * attribut du personnage
      */
     public Perso pj;
+
+    /**
+     * attribut du monstre
+     */
+    public ArrayList<Monstre> m = new ArrayList<>();
 
     /**
      * les murs du labyrinthe
@@ -67,8 +76,7 @@ public class Labyrinthe {
             default:
                 throw new Error("action inconnue");
         }
-        int[] res = {x, y};
-        return res;
+        return new int[]{x, y};
     }
 
     /**
@@ -118,7 +126,12 @@ public class Labyrinthe {
                         // ajoute PJ
                         this.pj = new Perso(colonne, numeroLigne);
                         break;
-
+                    case MONSTRE:
+                        // pas de mur
+                        this.murs[colonne][numeroLigne] = false;
+                        // ajoute un monstre
+                        this.m.add(new Monstre(colonne, numeroLigne));
+                        break;
                     default:
                         throw new Error("caractere inconnu " + c);
                 }
@@ -148,11 +161,65 @@ public class Labyrinthe {
         int[] suivante = getSuivant(courante[0], courante[1], action);
 
         // si c'est pas un mur, on effectue le deplacement
-        if (!this.murs[suivante[0]][suivante[1]]) {
+        if ((!this.murs[suivante[0]][suivante[1]]) && (!this.getM(suivante[0], suivante[1]))) {
             // on met a jour personnage
             this.pj.x = suivante[0];
             this.pj.y = suivante[1];
         }
+    }
+
+    public void deplacerMonstre(int i){
+        int alea = (int) Math.floor(Math.random()*4);
+        String action = "";
+        if (alea == 0){
+            int deplacement = (int) Math.floor(Math.random()*4);
+            if (deplacement == 0){
+                action = "Haut";
+            }
+            else if (deplacement == 1){
+                action = "Bas";
+            }
+            else if (deplacement == 2){
+                action = "Gauche";
+            }
+            else {
+                action = "Droite";
+            }
+        }
+        else {
+            int x = this.m.get(i).getX() - this.pj.getX();
+            int y = this.m.get(i).getY() - this.pj.getY();
+            if (Math.abs(x) < Math.abs(y)){
+                if (y<0){
+                    action = "Bas";
+                }
+                else {
+                    action = "Haut";
+                }
+            }
+            else {
+                if (x<0){
+                    action = "Droite";
+                }
+                else {
+                    action = "Gauche";
+                }
+            }
+        }
+        // case courante
+        int[] courante = {this.m.get(i).getX(), this.m.get(i).getY()};
+
+        // calcule case suivante
+        int[] suivante = getSuivant(courante[0], courante[1], action);
+
+        // si c'est pas un mur, on effectue le deplacement
+        if ((!this.murs[suivante[0]][suivante[1]]) && (!this.getM(suivante[0], suivante[1]))) {
+            // on met a jour personnage
+            this.m.remove(i) ;
+            this.m.add(i, new Monstre(suivante[0], suivante[1]));
+
+        }
+
     }
 
 
@@ -204,6 +271,17 @@ public class Labyrinthe {
 
     public boolean[][] getMurs() {
         return murs;
+    }
+
+
+    public boolean getM(int dx, int dy){
+        boolean present = false;
+        for (Monstre monstre : this.m){
+            if ((monstre.getX() == dx) && (monstre.getY() == dy)){
+                present = true;
+            }
+        }
+        return present;
     }
 
 }

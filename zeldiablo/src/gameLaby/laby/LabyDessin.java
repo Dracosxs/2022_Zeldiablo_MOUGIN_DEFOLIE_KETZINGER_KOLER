@@ -35,7 +35,7 @@ public class LabyDessin implements DessinJeu {
         LabyJeu laby = (LabyJeu) jeu;
 
         // recupere un pinceau pour dessiner
-        final GraphicsContext gc = canvas.getGraphicsContext2D();
+        GraphicsContext gc = canvas.getGraphicsContext2D();
 
 //        gc.drawImage(imageMur, 10 * 80,  10 * 80);
 
@@ -54,9 +54,12 @@ public class LabyDessin implements DessinJeu {
                 }else if ((laby.getL().getPj().getX()==x) && (laby.getL().getPj().getY()==y)) {
                     gc.setFill(Color.RED);
                     gc.fillOval(laby.tailleCase*x, laby.tailleCase*y, laby.tailleCase, laby.tailleCase);
-//                    gc.drawImage(imagePnj, laby.tailleCase * x, laby.tailleCase * y);
 
-                }else {
+                }else if (laby.getL().getM(x, y)) {
+                    gc.setFill(Color.DARKGREEN);
+                    gc.fillOval(laby.tailleCase*x, laby.tailleCase*y, laby.tailleCase, laby.tailleCase);
+                }
+                else {
                     gc.setFill(Color.LIGHTGRAY);
                     gc.fillRect(laby.tailleCase*x, laby.tailleCase*y, laby.tailleCase, laby.tailleCase);
                 }

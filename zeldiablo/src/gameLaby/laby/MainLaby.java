@@ -1,6 +1,10 @@
 package gameLaby.laby;
 
+<<<<<<< HEAD
 import javafx.scene.image.Image;
+=======
+
+>>>>>>> 5d21371d8258da6ae89f9fc2550390d4fb8dc0ef
 import moteurJeu.MoteurJeu;
 
 import java.io.IOException;
@@ -12,9 +16,11 @@ public class MainLaby {
 
 
         int fps = 10;
-        LabyJeu l = new LabyJeu("labySimple/laby1.txt");
-        int largeur = l.getL().getLength()*80;
-        int hauteur = l.getL().getLengthY()*80;
+
+        LabyJeu l = new LabyJeu("labySimple/laby2.txt");
+        int largeur = l.getL().getLength()*50;
+        int hauteur = l.getL().getLengthY()*50;
+
         //vérification dans le terminal que la laby est bien chargé
         for (int y = 0; y < l.getL().getLengthY(); y++) {
             // affiche la ligne
@@ -23,8 +29,12 @@ public class MainLaby {
                     System.out.print('X');
                 else if ((l.getL().getPj().getX()==x) && (l.getL().getPj().getY()==y)) {
                     System.out.print('P');
-                } else
-                    System.out.print('.');
+                }else if (l.getL().getM(x, y)) {
+                    System.out.print("M");
+                }
+                else {
+                    System.out.print(".");
+                }
             }
             // saut de ligne
             System.out.println();
@@ -34,7 +44,6 @@ public class MainLaby {
         MoteurJeu.setFPS(fps);
         MoteurJeu.setTaille(largeur, hauteur);
         MoteurJeu.launch(l, ld);
-
 
     }
 }
