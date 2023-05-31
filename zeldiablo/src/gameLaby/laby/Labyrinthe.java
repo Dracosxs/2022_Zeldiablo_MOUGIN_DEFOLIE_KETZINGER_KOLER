@@ -4,7 +4,7 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.SplittableRandom;
+
 
 /**
  * classe labyrinthe. represente un labyrinthe avec
@@ -37,7 +37,7 @@ public class Labyrinthe {
     /**
      * attribut du monstre
      */
-    public ArrayList<Monstre> m = new ArrayList<Monstre>();
+    public ArrayList<Monstre> m = new ArrayList<>();
 
     /**
      * les murs du labyrinthe
@@ -75,8 +75,7 @@ public class Labyrinthe {
             default:
                 throw new Error("action inconnue");
         }
-        int[] res = {x, y};
-        return res;
+        return new int[]{x, y};
     }
 
     /**
@@ -168,6 +167,35 @@ public class Labyrinthe {
         }
     }
 
+    public void deplacerMonstre(int i){
+        int deplacement = (int) Math.floor(Math.random()*4);
+        String action = "";
+        if (deplacement == 0){
+            action = "Haut";
+        }
+        else if (deplacement == 1){
+            action = "Bas";
+        }
+        else if (deplacement == 2){
+            action = "Gauche";
+        }
+        else {
+            action = "Droite";
+        }
+        // case courante
+        int[] courante = {this.m.get(i).getX(), this.m.get(i).getY()};
+
+        // calcule case suivante
+        int[] suivante = getSuivant(courante[0], courante[1], action);
+
+        // si c'est pas un mur, on effectue le deplacement
+        if ((!this.murs[suivante[0]][suivante[1]]) && (!this.getM(suivante[0], suivante[1]))) {
+            // on met a jour personnage
+            this.m.remove(i) ;
+            this.m.add(i, new Monstre(suivante[0], suivante[1]));
+        }
+    }
+
 
     /**
      * jamais fini
@@ -224,4 +252,6 @@ public class Labyrinthe {
         }
         return present;
     }
+
+
 }

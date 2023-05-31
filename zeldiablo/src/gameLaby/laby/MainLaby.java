@@ -1,6 +1,6 @@
 package gameLaby.laby;
 
-import javafx.scene.paint.Color;
+
 import moteurJeu.MoteurJeu;
 
 import java.io.IOException;
@@ -10,7 +10,7 @@ public class MainLaby {
     public static void main(String[] args) throws IOException {
 
         int fps = 10;
-        LabyJeu l = new LabyJeu("labySimple/laby1.txt");
+        LabyJeu l = new LabyJeu("labySimple/laby0.txt");
         int largeur = l.getL().getLength()*80;
         int hauteur = l.getL().getLengthY()*80;
         //vérification dans le terminal que la laby est bien chargé
@@ -36,5 +36,6 @@ public class MainLaby {
         MoteurJeu.setFPS(fps);
         MoteurJeu.setTaille(largeur, hauteur);
         MoteurJeu.launch(l, ld);
+
     }
 }

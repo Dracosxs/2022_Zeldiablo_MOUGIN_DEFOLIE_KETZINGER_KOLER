@@ -1,11 +1,11 @@
 package gameLaby.laby;
 
-public class Monstre extends Perso{
+public class Monstre extends Perso {
 
     /**
      * position du personnage
      */
-    private int x, y;
+    int x, y;
 
     /**
      * constructeur
@@ -16,4 +16,5 @@ public class Monstre extends Perso{
     public Monstre(int dx, int dy) {
         super(dx, dy);
     }
+
 }
