@@ -24,7 +24,11 @@ public class LabyDessin implements DessinJeu {
                 }else if ((laby.getL().getPj().getX()==x) && (laby.getL().getPj().getY()==y)) {
                     gc.setFill(Color.RED);
                     gc.fillOval(laby.tailleCase*x, laby.tailleCase*y, laby.tailleCase, laby.tailleCase);
-                }else {
+                }else if (laby.getL().getM(x, y)) {
+                    gc.setFill(Color.DARKGREEN);
+                    gc.fillOval(laby.tailleCase*x, laby.tailleCase*y, laby.tailleCase, laby.tailleCase);
+                }
+                else {
                     gc.setFill(Color.LIGHTGRAY);
                     gc.fillRect(laby.tailleCase*x, laby.tailleCase*y, laby.tailleCase, laby.tailleCase);
                 }

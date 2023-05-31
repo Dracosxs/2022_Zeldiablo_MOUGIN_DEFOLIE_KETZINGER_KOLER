@@ -1,5 +1,6 @@
 package gameLaby.laby;
 
+import javafx.scene.paint.Color;
 import moteurJeu.MoteurJeu;
 
 import java.io.IOException;
@@ -19,8 +20,12 @@ public class MainLaby {
                     System.out.print('X');
                 else if ((l.getL().getPj().getX()==x) && (l.getL().getPj().getY()==y)) {
                     System.out.print('P');
-                } else
-                    System.out.print('.');
+                }else if (l.getL().getM(x, y)) {
+                    System.out.print("M");
+                }
+                else {
+                    System.out.print(".");
+                }
             }
             // saut de ligne
             System.out.println();
@@ -29,7 +34,5 @@ public class MainLaby {
         MoteurJeu.setFPS(fps);
         MoteurJeu.setTaille(largeur, hauteur);
         MoteurJeu.launch(l, ld);
-
-
     }
 }

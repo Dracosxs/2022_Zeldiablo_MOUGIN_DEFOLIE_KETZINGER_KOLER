@@ -3,6 +3,8 @@ package gameLaby.laby;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.SplittableRandom;
 
 /**
  * classe labyrinthe. represente un labyrinthe avec
@@ -17,6 +19,7 @@ public class Labyrinthe {
     public static final char MUR = 'X';
     public static final char PJ = 'P';
     public static final char VIDE = '.';
+    public static final char MONSTRE = 'M';
 
     /**
      * constantes actions possibles
@@ -30,6 +33,11 @@ public class Labyrinthe {
      * attribut du personnage
      */
     public Perso pj;
+
+    /**
+     * attribut du monstre
+     */
+    public ArrayList<Monstre> m = new ArrayList<Monstre>();
 
     /**
      * les murs du labyrinthe
@@ -118,7 +126,12 @@ public class Labyrinthe {
                         // ajoute PJ
                         this.pj = new Perso(colonne, numeroLigne);
                         break;
-
+                    case MONSTRE:
+                        // pas de mur
+                        this.murs[colonne][numeroLigne] = false;
+                        // ajoute un monstre
+                        this.m.add(new Monstre(colonne, numeroLigne));
+                        break;
                     default:
                         throw new Error("caractere inconnu " + c);
                 }
@@ -148,7 +161,7 @@ public class Labyrinthe {
         int[] suivante = getSuivant(courante[0], courante[1], action);
 
         // si c'est pas un mur, on effectue le deplacement
-        if (!this.murs[suivante[0]][suivante[1]]) {
+        if ((!this.murs[suivante[0]][suivante[1]]) && (!this.getM(suivante[0], suivante[1]))) {
             // on met a jour personnage
             this.pj.x = suivante[0];
             this.pj.y = suivante[1];
@@ -200,5 +213,15 @@ public class Labyrinthe {
 
     public Perso getPj() {
         return pj;
+    }
+
+    public boolean getM(int dx, int dy){
+        boolean present = false;
+        for (Monstre monstre : this.m){
+            if ((monstre.getX() == dx) && (monstre.getY() == dy)){
+                present = true;
+            }
+        }
+        return present;
     }
 }
