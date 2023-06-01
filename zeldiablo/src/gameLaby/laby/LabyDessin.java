@@ -51,19 +51,26 @@ public class LabyDessin implements DessinJeu {
 //                    gc.drawImage(imageMur, laby.tailleCase * x, laby.tailleCase * y);
 
 
-                }else if ((laby.getL().getPj().getX()==x) && (laby.getL().getPj().getY()==y)) {
+                }else if ((laby.getL().getJ().getX()==x) && (laby.getL().getJ().getY()==y)) {
+                    gc.setFill(Color.LIGHTGRAY);
+                    gc.fillRect(laby.tailleCase*x, laby.tailleCase*y, laby.tailleCase, laby.tailleCase);
                     gc.setFill(Color.RED);
                     gc.fillOval(laby.tailleCase*x, laby.tailleCase*y, laby.tailleCase, laby.tailleCase);
 
                 }else if (laby.getL().getM(x, y)) {
                     gc.setFill(Color.DARKGREEN);
                     gc.fillOval(laby.tailleCase*x, laby.tailleCase*y, laby.tailleCase, laby.tailleCase);
-                }
-                else {
+                } else if (laby.getL().getPiecePresente(x, y)) {
+                    gc.setFill(Color.LIGHTGRAY);
+                    gc.fillRect(laby.tailleCase*x, laby.tailleCase*y, laby.tailleCase, laby.tailleCase);
+                    gc.setFill(Color.YELLOW);
+                    gc.fillOval(laby.tailleCase*x, laby.tailleCase*y, laby.tailleCase, laby.tailleCase);
+                } else {
                     gc.setFill(Color.LIGHTGRAY);
                     gc.fillRect(laby.tailleCase*x, laby.tailleCase*y, laby.tailleCase, laby.tailleCase);
                 }
             }
         }
+
     }
 }
