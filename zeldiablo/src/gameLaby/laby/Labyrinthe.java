@@ -8,6 +8,8 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import javafx.animation.PauseTransition;
+import javafx.util.Duration;
 
 
 
@@ -90,6 +92,9 @@ public class Labyrinthe {
      * @return labyrinthe cree
      * @throws IOException probleme a la lecture / ouverture
      */
+
+
+
     public Labyrinthe(String nom) throws IOException {
         // ouvrir fichier
         FileReader fichier = new FileReader(nom);
@@ -172,42 +177,29 @@ public class Labyrinthe {
         }
     }
 
+
+
     public void deplacerMonstre(int i) throws IOException {
-        int alea = 1/**(int) Math.floor(Math.random()*4)*/;
+        int alea = 1 /**(int) Math.floor(Math.random()*4)*/;
         String action = "";
-        if (alea == 0){
-            int deplacement = (int) Math.floor(Math.random()*4);
-            if (deplacement == 0){
-                action = "Haut";
-            }
-            else if (deplacement == 1){
-                action = "Bas";
-            }
-            else if (deplacement == 2){
-                action = "Gauche";
-            }
-            else {
-                action = "Droite";
-            }
-        }
-        else {
-            action = getProchaineAction(i);
-        }
+
+        action = getProchaineAction(i);
+
         // case courante
         int[] courante = {this.m.get(i).getX(), this.m.get(i).getY()};
 
         // calcule case suivante
         int[] suivante = getSuivant(courante[0], courante[1], action);
 
-        // si c'est pas un mur, on effectue le deplacement
-        if ((!this.murs[suivante[0]][suivante[1]]) && (!this.getM(suivante[0], suivante[1]))) {
-            // on met a jour personnage
-            this.m.remove(i) ;
-            this.m.add(i, new Monstre(suivante[0], suivante[1]));
+        // si ce n'est pas un mur, on effectue le déplacement avec délai
+            if ((!this.murs[suivante[0]][suivante[1]]) && (!this.getM(suivante[0], suivante[1]))) {
+                // on met a jour personnage
+                this.m.remove(i) ;
+                this.m.add(i, new Monstre(suivante[0], suivante[1]));
 
-        }
-
+            }
     }
+
 
 
     /**
