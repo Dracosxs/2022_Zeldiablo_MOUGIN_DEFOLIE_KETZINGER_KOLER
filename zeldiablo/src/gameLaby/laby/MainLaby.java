@@ -10,8 +10,6 @@ public class MainLaby {
 
     public static void main(String[] args) throws IOException {
 
-
-
         int fps = 10;
 
         LabyJeu l = new LabyJeu("labySimple/laby2.txt");
@@ -24,7 +22,7 @@ public class MainLaby {
             for (int x = 0; x < l.getL().getLength(); x++) {
                 if (l.getL().getMur(x, y))
                     System.out.print('X');
-                else if ((l.getL().getPj().getX()==x) && (l.getL().getPj().getY()==y)) {
+                else if ((l.getL().getJ().getX()==x) && (l.getL().getJ().getY()==y)) {
                     System.out.print('P');
                 }else if (l.getL().getM(x, y)) {
                     System.out.print("M");

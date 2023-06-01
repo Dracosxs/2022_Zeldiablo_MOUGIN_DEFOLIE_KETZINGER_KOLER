@@ -2,10 +2,6 @@ package gameLaby.laby;
 
 public class Monstre extends Perso {
 
-    /**
-     * position du personnage
-     */
-    int x, y;
 
 
     /**

@@ -27,6 +27,7 @@ public class Labyrinthe {
     public static final char PJ = 'P';
     public static final char VIDE = '.';
     public static final char MONSTRE = 'M';
+    public static final char PIECE = 'C';
 
     /**
      * constantes actions possibles
@@ -36,15 +37,22 @@ public class Labyrinthe {
     public static final String GAUCHE = "Gauche";
     public static final String DROITE = "Droite";
 
+
+
     /**
      * attribut du personnage
      */
-    public Perso pj;
+    public Joueur j;
 
     /**
-     * attribut du monstre
+     * Liste des monstres
      */
     public ArrayList<Monstre> m = new ArrayList<>();
+
+    /**
+     * Liste des pièces
+     */
+    public ArrayList<Piece> p = new ArrayList<>();
 
     /**
      * les murs du labyrinthe
@@ -108,7 +116,8 @@ public class Labyrinthe {
 
         // creation labyrinthe vide
         this.murs = new boolean[nbColonnes][nbLignes];
-        this.pj = null;
+        this.j = null;
+
 
         // lecture des cases
         String ligne = bfRead.readLine();
@@ -132,14 +141,20 @@ public class Labyrinthe {
                     case PJ:
                         // pas de mur
                         this.murs[colonne][numeroLigne] = false;
-                        // ajoute PJ
-                        this.pj = new Perso(colonne, numeroLigne);
+                        // ajoute joueur
+                        this.j = new Joueur(colonne, numeroLigne);
                         break;
                     case MONSTRE:
                         // pas de mur
                         this.murs[colonne][numeroLigne] = false;
                         // ajoute un monstre
                         this.m.add(new Monstre(colonne, numeroLigne));
+                        break;
+                    case PIECE:
+                        // pas de mur
+                        this.murs[colonne][numeroLigne] = false;
+                        // ajoute un monstre
+                        this.p.add(new Piece(colonne, numeroLigne));
                         break;
                     default:
                         throw new Error("caractere inconnu " + c);
@@ -164,7 +179,7 @@ public class Labyrinthe {
      */
     public void deplacerPerso(String action) {
         // case courante
-        int[] courante = {this.pj.x, this.pj.y};
+        int[] courante = {this.j.x, this.j.y};
 
         // calcule case suivante
         int[] suivante = getSuivant(courante[0], courante[1], action);
@@ -172,8 +187,15 @@ public class Labyrinthe {
         // si c'est pas un mur, on effectue le deplacement
         if ((!this.murs[suivante[0]][suivante[1]]) && (!this.getM(suivante[0], suivante[1]))) {
             // on met a jour personnage
-            this.pj.x = suivante[0];
-            this.pj.y = suivante[1];
+            this.j.x = suivante[0];
+            this.j.y = suivante[1];
+            for (Piece piece : p){
+                if ((this.j.getX() == piece.getX()) && (this.j.getY() == piece.getY())){
+                    this.j.PieceRammasee(piece.getX(), piece.getY());
+                    piece.setPieceRecuperee();
+                    pieceRamassee(piece);
+                }
+            }
         }
     }
 
@@ -244,8 +266,8 @@ public class Labyrinthe {
         return this.murs[x][y];
     }
 
-    public Perso getPj() {
-        return pj;
+    public Perso getJ() {
+        return j;
     }
 
     public boolean[][] getMurs() {
@@ -266,6 +288,20 @@ public class Labyrinthe {
             }
         }
         return present;
+    }
+
+    public boolean getPiecePresente(int dx, int dy){
+        boolean present = false;
+        for (Piece piece : this.p){
+            if ((piece.getX() == dx) && (piece.getY() == dy)){
+                present = true;
+            }
+        }
+        return present;
+    }
+
+    public void pieceRamassee(Piece piece){
+        this.p.remove(piece);
     }
 
     public GrapheListe genererGraphe() throws IOException {
@@ -340,11 +376,11 @@ public class Labyrinthe {
     public String getProchaineAction(int indiceMonstre) throws IOException {
         int xMonstre = this.m.get(indiceMonstre).getX();
         int yMonstre = this.m.get(indiceMonstre).getY();
-        int xPj = this.pj.getX();
-        int yPj = this.pj.getY();
+        int xJ = this.j.getX();
+        int yJ = this.j.getY();
         String action = "";
         String depart = xMonstre + ", " + yMonstre;
-        String arrivee = xPj + ", " + yPj;
+        String arrivee = xJ + ", " + yJ;
         Dijkstra d = new Dijkstra();
         Valeur v = d.resoudre(genererGraphe(), depart);
         ArrayList<String> chemin = v.calculerChemin(arrivee);
