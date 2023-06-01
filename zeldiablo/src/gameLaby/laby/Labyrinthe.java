@@ -28,6 +28,7 @@ public class Labyrinthe {
     public static final char VIDE = '.';
     public static final char MONSTRE = 'M';
     public static final char PIECE = 'C';
+    public static final char SORTIE = 'S';
 
     /**
      * constantes actions possibles
@@ -58,6 +59,11 @@ public class Labyrinthe {
      * les murs du labyrinthe
      */
     public boolean[][] murs;
+
+    /**
+     * la sortie du labyrinthe
+     */
+    public Sortie sortie;
 
 
 
@@ -155,6 +161,12 @@ public class Labyrinthe {
                         this.murs[colonne][numeroLigne] = false;
                         // ajoute un monstre
                         this.p.add(new Piece(colonne, numeroLigne));
+                        break;
+                    case SORTIE:
+                        // pas de mur
+                        this.murs[colonne][numeroLigne] = false;
+                        // ajoute escalier
+                        this.sortie = new Sortie(colonne, numeroLigne);
                         break;
                     default:
                         throw new Error("caractere inconnu " + c);
