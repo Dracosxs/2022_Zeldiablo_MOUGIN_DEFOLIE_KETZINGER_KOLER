@@ -1,5 +1,9 @@
 package gameLaby.laby;
 
+import ALGO.Dijkstra;
+import ALGO.Valeur;
+import Graphe.GrapheListe;
+
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
@@ -168,8 +172,8 @@ public class Labyrinthe {
         }
     }
 
-    public void deplacerMonstre(int i){
-        int alea = (int) Math.floor(Math.random()*4);
+    public void deplacerMonstre(int i) throws IOException {
+        int alea = 1/**(int) Math.floor(Math.random()*4)*/;
         String action = "";
         if (alea == 0){
             int deplacement = (int) Math.floor(Math.random()*4);
@@ -187,24 +191,7 @@ public class Labyrinthe {
             }
         }
         else {
-            int x = this.m.get(i).getX() - this.pj.getX();
-            int y = this.m.get(i).getY() - this.pj.getY();
-            if (Math.abs(x) < Math.abs(y)){
-                if (y<0){
-                    action = "Bas";
-                }
-                else {
-                    action = "Haut";
-                }
-            }
-            else {
-                if (x<0){
-                    action = "Droite";
-                }
-                else {
-                    action = "Gauche";
-                }
-            }
+            action = getProchaineAction(i);
         }
         // case courante
         int[] courante = {this.m.get(i).getX(), this.m.get(i).getY()};
@@ -278,5 +265,107 @@ public class Labyrinthe {
         }
         return present;
     }
+
+    public GrapheListe genererGraphe() throws IOException {
+        // Création du graphe vide
+        GrapheListe g = new GrapheListe();
+        // Création d'une table support pour stocker les indices des cases libres adjacentes (voir getAdjacent)
+        int[][] tabTemp = new int[2][4];
+        // Première boucle sur x
+        for (int i = 0; i < getLengthY(); i++) {
+            // Deuxième boucle sur y
+            for (int j = 0; j < getLength(); j++) {
+                // On regarde si à i,j il n'y a pas de mur
+                if (!this.murs[j][i]){
+                    // On récupère les cases adjacentes qui sont libres à i, j
+                    tabTemp = this.getAdjacent(j, i);
+                    // On parcourt tabTemp pour récupérer les cases adjacentes libres
+                    for (int k = 0; k < tabTemp[0].length; k++) {
+                        // On regarde si la place est libre (si ell ne l'est pas la valeur de la case est infini)
+                        if (tabTemp[0][k] != Integer.MAX_VALUE){
+                            // On ajoute finalement le noeud de départ, un noeud libre adjacent et le cout qui est de 1 pour tous
+                            g.ajouterArc(j + ", " + i, tabTemp[0][k] + ", " + tabTemp[1][k], 1);
+                        }
+                    }
+                }
+            }
+        }
+        return g;
+    }
+
+
+    public int[][] getAdjacent(int x, int y){
+        int[][] tab = new int[2][4];
+        //on regarde si au dessus c'est libre
+        if (!this.murs[x][y-1]){
+            tab[0][0] = x;
+            tab[1][0] = y-1;
+        }
+        else {
+            tab[0][0] = Integer.MAX_VALUE;
+            tab[1][0] = Integer.MAX_VALUE;
+        }
+        //pareil pour le dessous
+        if (!this.murs[x][y+1]){
+            tab[0][1] = x;
+            tab[1][1] = y+1;
+        }
+        else {
+            tab[0][1] = Integer.MAX_VALUE;
+            tab[1][1] = Integer.MAX_VALUE;
+        }
+        //pareil pour la gauche
+        if (!this.murs[x-1][y]){
+            tab[0][2] = x-1;
+            tab[1][2] = y;
+        }
+        else {
+            tab[0][2] = Integer.MAX_VALUE;
+            tab[1][2] = Integer.MAX_VALUE;
+        }
+        //pareil pour la droite
+        if (!this.murs[x+1][y]){
+            tab[0][3] = x+1;
+            tab[1][3] = y;
+        }
+        else {
+            tab[0][3] = Integer.MAX_VALUE;
+            tab[1][3] = Integer.MAX_VALUE;
+        }
+        return tab;
+    }
+
+    public String getProchaineAction(int indiceMonstre) throws IOException {
+        int xMonstre = this.m.get(indiceMonstre).getX();
+        int yMonstre = this.m.get(indiceMonstre).getY();
+        int xPj = this.pj.getX();
+        int yPj = this.pj.getY();
+        String action = "";
+        String depart = xMonstre + ", " + yMonstre;
+        String arrivee = xPj + ", " + yPj;
+        Dijkstra d = new Dijkstra();
+        Valeur v = d.resoudre(genererGraphe(), depart);
+        ArrayList<String> chemin = v.calculerChemin(arrivee);
+        String temp = chemin.toString();
+        temp = temp.replace("[", "");
+        temp = temp.replace("]", "");
+        String[] tab = temp.split(", ");
+
+        int nvX = Integer.parseInt(tab[2]);
+        int nvY = Integer.parseInt(tab[3]);
+        if ((nvX > xMonstre) && (nvY == yMonstre)){
+            action = "Droite";
+        }
+        else if ((nvX < xMonstre) && (nvY == yMonstre)){
+            action = "Gauche";
+        } else if ((nvX == xMonstre) && (nvY < yMonstre)) {
+            action = "Haut";
+        }
+        else {
+            action = "Bas";
+        }
+        return action;
+    }
+
 
 }

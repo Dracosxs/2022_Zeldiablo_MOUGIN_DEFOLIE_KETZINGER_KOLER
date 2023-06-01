@@ -19,7 +19,7 @@ public class LabyJeu implements Jeu {
     }
 
     @Override
-    public void update(double secondes, Clavier clavier) {
+    public void update(double secondes, Clavier clavier) throws IOException {
         // deplace le personnage en fonction des touches
             if (clavier.droite) {
                 this.l.deplacerPerso("Droite");
@@ -40,8 +40,10 @@ public class LabyJeu implements Jeu {
                 deplacementTotal ++;
 
             }
-            int monstre = (int) (Math.random()*this.l.m.size());
-            this.l.deplacerMonstre(monstre);
+            for (int i = 0 ; i < this.getL().m.size() ; i++){
+                this.l.deplacerMonstre(i);
+            }
+
 
         }
 
