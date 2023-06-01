@@ -1,0 +1,36 @@
+@startuml
+skinparam monochrome true
+
+actor Utilisateur
+
+participant "Laby:Labyrinthe" as Laby
+participant "p:Perso" as P
+participant "m:Monstre" as M
+
+Utilisateur -> Laby: Déplacer le joueur (x, y)
+activate Laby
+
+Laby -> Laby: Vérifier la collision avec un monstre (x, y)
+activate Laby
+Laby --> Utilisateur: Collision avec un monstre détectée
+deactivate Laby
+
+Laby -> Laby: Vérifier la présence d'un monstre (x, y)
+activate Laby
+Laby --> Laby: Renvoyer vrai si monstre présent
+deactivate Laby
+
+Laby -> P: Récupérer la position du joueur
+activate P
+P --> Laby: Position du joueur (x, y)
+deactivate P
+
+Laby -> M: Récupérer la position du monstre
+activate M
+M --> Laby: Position du monstre (x, y)
+deactivate M
+
+Laby --> Utilisateur: Collision avec un monstre détectée
+deactivate Laby
+
+@enduml

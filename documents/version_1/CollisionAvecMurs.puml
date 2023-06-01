@@ -1,0 +1,30 @@
+@startuml
+skinparam monochrome true
+
+actor Utilisateur
+
+participant "Laby:Labyrinthe" as Laby
+participant "p:Perso" as P
+
+Utilisateur -> Laby: Déplacer le personnage (x, y)
+activate Laby
+
+Laby -> Laby: Vérifier la collision avec les murs (x, y)
+activate Laby
+Laby --> Utilisateur: Collision avec les murs détectée
+deactivate Laby
+
+Laby -> Laby: Vérifier la présence d'un mur (x, y)
+activate Laby
+Laby --> Laby: Renvoyer vrai si mur présent
+deactivate Laby
+
+Laby -> P: Récupérer la position du personnage
+activate P
+P --> Laby: Position du personnage (x, y)
+deactivate P
+
+Laby --> Utilisateur: Collision avec les murs détectée
+deactivate Laby
+
+@enduml
