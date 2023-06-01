@@ -3,6 +3,7 @@ package gameLaby.laby;
 import javafx.animation.Timeline;
 import moteurJeu.Clavier;
 import moteurJeu.Jeu;
+import moteurJeu.MoteurJeu;
 
 
 import java.io.IOException;
@@ -21,31 +22,32 @@ public class LabyJeu implements Jeu {
     @Override
     public void update(double secondes, Clavier clavier) throws IOException {
         // deplace le personnage en fonction des touches
+        if (!etreFini()) {
             if (clavier.droite) {
                 this.l.deplacerPerso("Droite");
-                deplacementTotal ++;
+                deplacementTotal++;
             }
 
             if (clavier.gauche) {
                 this.l.deplacerPerso("Gauche");
-                deplacementTotal ++;
+                deplacementTotal++;
             }
             if (clavier.haut) {
                 this.l.deplacerPerso("Haut");
-                deplacementTotal ++;
+                deplacementTotal++;
             }
 
             if (clavier.bas) {
                 this.l.deplacerPerso("Bas");
-                deplacementTotal ++;
+                deplacementTotal++;
 
             }
-            for (int i = 0 ; i < this.getL().m.size() ; i++){
+            for (int i = 0; i < this.getL().m.size(); i++) {
                 this.l.deplacerMonstre(i);
             }
-
-
+        } else {
         }
+    }
 
 
 
@@ -57,7 +59,14 @@ public class LabyJeu implements Jeu {
 
     @Override
     public boolean etreFini() {
-        return false;
+        boolean fin = false;
+        for (int i = 0 ; i < this.getL().m.size() ; i++){
+            if ((this.getL().pj.getX() == this.getL().m.get(i).getX()) && (this.getL().pj.getY() == this.getL().m.get(i).getY())){
+                fin = true;
+            }
+        }
+
+        return fin;
     }
 
     public Labyrinthe getL(){
