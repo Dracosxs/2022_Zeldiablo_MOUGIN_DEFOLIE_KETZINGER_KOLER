@@ -286,10 +286,11 @@ public class Labyrinthe {
         return murs;
     }
 
-    public boolean getMurs(int x, int y) {
-        // utilise le tableau de boolean
-        return this.murs[x][y];
+
+    public Sortie getSortie() {
+        return sortie;
     }
+
 
 
     public boolean getM(int dx, int dy){
@@ -416,6 +417,7 @@ public class Labyrinthe {
         }
         return action;
     }
+
 
 
 }

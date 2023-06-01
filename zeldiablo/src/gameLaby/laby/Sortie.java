@@ -14,17 +14,14 @@ public class Sortie {
         }
 
 
-        public boolean etrePresent(int x, int y) {
-            return this.xSortie == x && this.ySortie == y;
-        }
 
 
-        public void afficherEscalier() {
+        public void afficherSortie() {
             this.affiche = true;
         }
 
 
-        public void cacherEscalier() {
+        public void cacherSortie() {
             this.affiche = false;
         }
 

@@ -25,40 +25,33 @@ public class LabyJeu implements Jeu {
     public void update(double secondes, Clavier clavier) throws IOException {
         // deplace le personnage en fonction des touches
         if ((!etreFini()) && (pieceTot != this.l.j.getPiecesRammassees())) {
-            faireActionClavier(clavier);
+            if (clavier.droite) {
+                this.l.deplacerPerso("Droite");
+            }
+
+            if (clavier.gauche) {
+                this.l.deplacerPerso("Gauche");
+
+            }
+            if (clavier.haut) {
+                this.l.deplacerPerso("Haut");
+            }
+
+            if (clavier.bas) {
+                this.l.deplacerPerso("Bas");
+
+            }
             for (int i = 0; i < this.getL().m.size(); i++) {
                 this.l.deplacerMonstre(i);
             }
-            System.out.println(this.l.j.getPiecesRammassees());
-        } else if (pieceTot == this.l.j.getPiecesRammassees()){
-            for (int i = 0; i < this.getL().m.size(); i++) {
-                this.l.m.remove(i);
-            }
-            faireActionClavier(clavier);
-        }
-        else {
+        } else if (pieceTot == this.l.j.getPiecesRammassees()) {
+
+
 
         }
     }
 
-    public void faireActionClavier(Clavier clavier) {
-        if (clavier.droite) {
-            this.l.deplacerPerso("Droite");
-        }
 
-        if (clavier.gauche) {
-            this.l.deplacerPerso("Gauche");
-
-        }
-        if (clavier.haut) {
-            this.l.deplacerPerso("Haut");
-        }
-
-        if (clavier.bas) {
-            this.l.deplacerPerso("Bas");
-
-        }
-    }
 
 
     @Override

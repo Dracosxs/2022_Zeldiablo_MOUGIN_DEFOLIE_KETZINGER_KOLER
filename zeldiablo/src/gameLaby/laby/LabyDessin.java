@@ -7,29 +7,37 @@ import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
 import moteurJeu.DessinJeu;
 import moteurJeu.Jeu;
+import javafx.scene.image.Image;
+
+
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 
 public class LabyDessin implements DessinJeu {
 
-    public Image imageMur;
+    public static Image imageMUR;
 
-    public Image imagePnj;
+    public static Image imagePNJ;
+
+    public static Image imageMONSTRE;
+
+    public static Image imagePIECE;
+
+    public static Image imageSORTIE;
 
     @Override
     public void dessinerJeu(Jeu jeu, Canvas canvas) {
 
-//        try {
-//            Image image = new Image("file:Resources/mur.png");
-//            // Image chargée avec succès, vous pouvez continuer à utiliser l'image
-//        } catch (Exception e) {
-//            System.err.println("Erreur lors du chargement de l'image : " + e.getMessage());
-//            // Gérer l'erreur, afficher un message d'erreur ou effectuer d'autres actions nécessaires
-//        }
 
+        this.imageMUR = Sprite.MUR;
 
+        this.imagePNJ = Sprite.PNJ;
 
-        this.imageMur = Sprite.MUR;
+        this.imageMONSTRE = Sprite.MONSTRE;
 
-        this.imagePnj = Sprite.PNJ;
+        this.imagePIECE = Sprite.PIECE;
+
+        this.imageSORTIE = Sprite.SORTIE;
 
 
         LabyJeu laby = (LabyJeu) jeu;
@@ -45,28 +53,30 @@ public class LabyDessin implements DessinJeu {
             // affiche la ligne
             for (int x = 0; x < laby.getL().getLength(); x++) {
                 if (laby.getL().getMur(x, y)) {
-                    gc.setFill(Color.BLACK);
                     gc.fillRect(laby.tailleCase*x, laby.tailleCase*y, laby.tailleCase, laby.tailleCase);
-//                    System.out.println("x : " + laby.tailleCase * x + " y : " + laby.tailleCase * y);
-//                    gc.drawImage(imageMur, laby.tailleCase * x, laby.tailleCase * y);
-
+                    gc.drawImage(imageMUR, laby.tailleCase * x, laby.tailleCase * y);
 
                 }else if ((laby.getL().getJ().getX()==x) && (laby.getL().getJ().getY()==y)) {
-                    gc.setFill(Color.LIGHTGRAY);
+                    gc.setFill(Color.web("302415"));
                     gc.fillRect(laby.tailleCase*x, laby.tailleCase*y, laby.tailleCase, laby.tailleCase);
-                    gc.setFill(Color.RED);
-                    gc.fillOval(laby.tailleCase*x, laby.tailleCase*y, laby.tailleCase, laby.tailleCase);
+                    gc.drawImage(imagePNJ, laby.tailleCase * x, laby.tailleCase * y);
 
                 }else if (laby.getL().getM(x, y)) {
-                    gc.setFill(Color.DARKGREEN);
-                    gc.fillOval(laby.tailleCase*x, laby.tailleCase*y, laby.tailleCase, laby.tailleCase);
-                } else if (laby.getL().getPiecePresente(x, y)) {
-                    gc.setFill(Color.LIGHTGRAY);
+                    gc.setFill(Color.web("302415"));
                     gc.fillRect(laby.tailleCase*x, laby.tailleCase*y, laby.tailleCase, laby.tailleCase);
-                    gc.setFill(Color.YELLOW);
-                    gc.fillOval(laby.tailleCase*x, laby.tailleCase*y, laby.tailleCase, laby.tailleCase);
+                    gc.drawImage(imageMONSTRE, laby.tailleCase * x, laby.tailleCase * y);
+
+                } else if (laby.getL().getPiecePresente(x, y)) {
+                    gc.setFill(Color.web("302415"));
+                    gc.fillRect(laby.tailleCase*x, laby.tailleCase*y, laby.tailleCase, laby.tailleCase);
+                    gc.drawImage(imagePIECE, laby.tailleCase * x, laby.tailleCase * y);
+                }
+                else if (laby.getL().getSortie().getX() == x && laby.getL().getSortie().getY() == y ) {
+                    gc.setFill(Color.web("302415"));
+                    gc.fillRect(laby.tailleCase * x, laby.tailleCase * y, laby.tailleCase, laby.tailleCase);
+                    gc.drawImage(imageSORTIE, laby.tailleCase * x, laby.tailleCase * y);
                 } else {
-                    gc.setFill(Color.LIGHTGRAY);
+                    gc.setFill(Color.web("302415"));
                     gc.fillRect(laby.tailleCase*x, laby.tailleCase*y, laby.tailleCase, laby.tailleCase);
                 }
             }
