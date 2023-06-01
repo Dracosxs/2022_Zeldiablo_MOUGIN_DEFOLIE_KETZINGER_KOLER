@@ -256,6 +256,11 @@ public class Labyrinthe {
         return pj;
     }
 
+    public boolean[][] getMurs() {
+        return murs;
+    }
+
+
     public boolean getM(int dx, int dy){
         boolean present = false;
         for (Monstre monstre : this.m){
