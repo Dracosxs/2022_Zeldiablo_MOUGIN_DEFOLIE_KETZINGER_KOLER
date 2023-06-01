@@ -1,10 +1,8 @@
 package gameLaby.laby;
 
-<<<<<<< HEAD
-import javafx.scene.image.Image;
-=======
 
->>>>>>> 5d21371d8258da6ae89f9fc2550390d4fb8dc0ef
+import javafx.scene.image.Image;
+
 import moteurJeu.MoteurJeu;
 
 import java.io.IOException;
