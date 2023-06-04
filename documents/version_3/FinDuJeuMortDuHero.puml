@@ -5,7 +5,7 @@ actor Utilisateur
 
 participant "Jeu:LabyJeu" as Jeu
 participant "laby:Labyrinthe" as laby
-participant "joueur:Joueur" as J
+participant "joueur:Joueur" as joueur
 participant "monstres:ArrayList<Monstre>" as monstres
 
 Utilisateur -> Jeu: etreFini()
