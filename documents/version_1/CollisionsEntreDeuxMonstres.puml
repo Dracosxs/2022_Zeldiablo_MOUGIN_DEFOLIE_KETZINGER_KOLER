@@ -4,33 +4,23 @@ skinparam monochrome true
 actor Utilisateur
 
 participant "Laby:Labyrinthe" as Laby
-participant "M1:Monstre" as M1
-participant "M2:Monstre" as M2
+participant "M:Monstre" as M
 
-Utilisateur -> Laby: Déplacer un monstre (M1) vers (x, y)
+Utilisateur -> Laby: deplacerMonstre(i:Int)
 activate Laby
-
-Laby -> Laby: Vérifier la collision entre les monstres (M1, M2)
+Laby -> Laby: getProchaineAction(i):String
 activate Laby
-Laby --> Utilisateur: Collision entre les monstres détectée
+Laby --> Laby: action
 deactivate Laby
-
-Laby -> Laby: Vérifier la présence des monstres (M1, M2)
-activate Laby
-Laby --> Laby: Renvoyer vrai si les monstres sont présents
-deactivate Laby
-
-Laby -> M1: Récupérer la position du monstre (M1)
-activate M1
-M1 --> Laby: Position du monstre (M1) (x, y)
-deactivate M1
-
-Laby -> M2: Récupérer la position du monstre (M2)
-activate M2
-M2 --> Laby: Position du monstre (M2) (x, y)
-deactivate M2
-
-Laby --> Utilisateur: Collision entre les monstres détectée
+Laby -> M: getX():Int
+activate M
+Laby <-- M: x
+Laby -> M: getY():Int
+Laby <-- M: y
+deactivate M
+Laby -> Laby: getSuivant(x,y,action):boulean
+Laby -> Laby: getMonstrePresent(x,y):boulean
+Laby --> Utilisateur
 deactivate Laby
 
 @enduml
