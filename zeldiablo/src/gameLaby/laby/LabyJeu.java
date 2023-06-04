@@ -22,27 +22,35 @@ public class LabyJeu implements Jeu {
     public void update(double secondes, Clavier clavier) throws IOException {
         // deplace le personnage en fonction des touches
         if ((!etreFini()) && (TotalPiece != this.labyrinthe.joueur.getPiecesRammassees())) {
-            if (clavier.droite) {
-                this.labyrinthe.deplacerPerso("Droite");
-            }
-
-            if (clavier.gauche) {
-                this.labyrinthe.deplacerPerso("Gauche");
-
-            }
-            if (clavier.haut) {
-                this.labyrinthe.deplacerPerso("Haut");
-            }
-
-            if (clavier.bas) {
-                this.labyrinthe.deplacerPerso("Bas");
-
-            }
+            deplacementClavier(clavier);
             for (int i = 0; i < this.getLabyrinthe().ListeMosntre.size(); i++) {
                 this.labyrinthe.deplacerMonstre(i);
             }
         } else if (TotalPiece == this.labyrinthe.joueur.getPiecesRammassees()) {
+            for (int i = 0; i < this.getLabyrinthe().ListeMosntre.size(); i++){
+                this.labyrinthe.ListeMosntre.remove(this.labyrinthe.ListeMosntre.get(i));
+            }
+            this.labyrinthe.sortie.afficherSortie();
+            deplacementClavier(clavier);
 
+        }
+    }
+
+    public void deplacementClavier(Clavier clavier) {
+        if (clavier.droite) {
+            this.labyrinthe.deplacerPerso("Droite");
+        }
+
+        if (clavier.gauche) {
+            this.labyrinthe.deplacerPerso("Gauche");
+
+        }
+        if (clavier.haut) {
+            this.labyrinthe.deplacerPerso("Haut");
+        }
+
+        if (clavier.bas) {
+            this.labyrinthe.deplacerPerso("Bas");
 
         }
     }

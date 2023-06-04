@@ -67,9 +67,15 @@ public class LabyDessin implements DessinJeu {
                     gc.drawImage(imagePIECE, laby.tailleCase * x, laby.tailleCase * y);
                 }
                 else if (laby.getLabyrinthe().getSortie().getX() == x && laby.getLabyrinthe().getSortie().getY() == y ) {
-                    gc.setFill(Color.web("302415"));
-                    gc.fillRect(laby.tailleCase * x, laby.tailleCase * y, laby.tailleCase, laby.tailleCase);
-                    gc.drawImage(imageSORTIE, laby.tailleCase * x, laby.tailleCase * y);
+                    if (laby.getLabyrinthe().getSortie().etreAffiche()){
+                        gc.setFill(Color.web("302415"));
+                        gc.fillRect(laby.tailleCase * x, laby.tailleCase * y, laby.tailleCase, laby.tailleCase);
+                        gc.drawImage(imageSORTIE, laby.tailleCase * x, laby.tailleCase * y);
+                    }
+                    else {
+                        gc.setFill(Color.web("302415"));
+                        gc.fillRect(laby.tailleCase * x, laby.tailleCase * y, laby.tailleCase, laby.tailleCase);
+                    }
                 } else {
                     gc.setFill(Color.web("302415"));
                     gc.fillRect(laby.tailleCase*x, laby.tailleCase*y, laby.tailleCase, laby.tailleCase);
