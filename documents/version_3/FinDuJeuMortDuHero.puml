@@ -1,0 +1,42 @@
+@startuml
+skinparam monochrome true
+
+actor Utilisateur
+
+participant "Jeu:LabyJeu" as Jeu
+participant "laby:Labyrinthe" as laby
+participant "joueur:Joueur" as J
+participant "monstres:ArrayList<Monstre>" as monstres
+
+Utilisateur -> Jeu: etreFini()
+activate Jeu
+Jeu -> laby: getLabyrinthe()
+activate laby
+Jeu <-- laby: Labyrinthe
+deactivate laby
+loop int i, monstres.size()
+    Jeu -> monstres: get(i).getX()
+    activate monstres
+    Jeu <-- monstres: X
+    deactivate monstres
+    Jeu -> monstres: get(i).getY()
+    activate monstres
+    Jeu <-- monstres: Y
+    deactivate monstres
+    Jeu -> joueur: getX()
+    activate joueur
+    Jeu <-- joueur: X
+    deactivate joueur
+    Jeu -> joueur: getY()
+    activate joueur
+    Jeu <-- joueur: Y
+    deactivate joueur
+    alt monstresX == joueurX && monstresY == joueurY
+         Utilisateur <-- Jeu: true
+    else
+        Utilisateur <-- Jeu: false
+    end
+end
+deactivate Jeu
+
+@enduml
