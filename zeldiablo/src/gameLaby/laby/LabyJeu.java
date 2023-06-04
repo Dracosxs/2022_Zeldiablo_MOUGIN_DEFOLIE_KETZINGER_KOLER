@@ -15,7 +15,7 @@ public class LabyJeu implements Jeu {
 
     public LabyJeu(String nomFichier) throws IOException {
         this.labyrinthe = new Labyrinthe(nomFichier);
-        TotalPiece = this.labyrinthe.ListePiece.size();
+        TotalPiece = this.labyrinthe.getListePiece().size();
     }
 
     @Override
