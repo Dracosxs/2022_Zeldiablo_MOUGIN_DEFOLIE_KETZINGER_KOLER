@@ -71,7 +71,6 @@ public class Labyrinthe {
      */
     private boolean fin;
 
-
     // ##################################
     // Méthode statique
     // ##################################
@@ -266,7 +265,7 @@ public class Labyrinthe {
      *
      * @return fin du jeu
      */
-    public void etreFini() {
+    public void joueurSurSortie() {
         if ((this.joueur.getX() == this.sortie.getX()) && (this.joueur.getY() == this.sortie.getY()) && (this.sortie.etreAffiche())){
             this.fin = true;
         }

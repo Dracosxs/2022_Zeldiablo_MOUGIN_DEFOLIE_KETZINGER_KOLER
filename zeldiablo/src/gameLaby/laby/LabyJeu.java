@@ -12,10 +12,12 @@ public class LabyJeu implements Jeu {
     public final static int tailleCase = 50;
     public static int TotalPiece;
 
+    public static ArrayList<String> listeFichier;
     private Labyrinthe labyrinthe;
 
     public LabyJeu(ArrayList<String> nomFichier) throws IOException {
-        this.labyrinthe = new Labyrinthe(nomFichier);
+        listeFichier = nomFichier;
+        this.labyrinthe = new Labyrinthe(listeFichier);
         TotalPiece = this.labyrinthe.getListePiece().size();
     }
 
@@ -33,10 +35,10 @@ public class LabyJeu implements Jeu {
             }
             this.labyrinthe.getSortie().afficherSortie();
             deplacementClavier(clavier);
-            this.labyrinthe.etreFini();
+            this.labyrinthe.joueurSurSortie();
 
         } else {
-            // implémente la fin du jeu/ou le niveau suivant
+            this.labyrinthe = new Labyrinthe(listeFichier);
         }
     }
 
@@ -75,6 +77,7 @@ public class LabyJeu implements Jeu {
         }
         return fin;
     }
+
 
     public Labyrinthe getLabyrinthe() {
         return this.labyrinthe;
