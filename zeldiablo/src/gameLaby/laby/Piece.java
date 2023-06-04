@@ -2,9 +2,9 @@ package gameLaby.laby;
 
 public class Piece {
 
-    int x, y;
+    private int x, y;
 
-    boolean pieceRecuperee;
+    private boolean pieceRecuperee;
 
     public Piece(int dx, int dy){
         this.x = dx;
@@ -24,5 +24,7 @@ public class Piece {
         return y;
     }
 
-
+    public boolean getPieceRecuperee() {
+        return pieceRecuperee;
+    }
 }

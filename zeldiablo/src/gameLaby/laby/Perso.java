@@ -9,7 +9,7 @@ public class Perso {
     /**
      * position du personnage
      */
-    int x, y;
+    private int x, y;
 
     /**
      * constructeur
@@ -32,6 +32,14 @@ public class Perso {
     public boolean etrePresent(int dx, int dy) {
 
         return (this.x == dx && this.y == dy);
+    }
+
+    public void setX(int x) {
+        this.x = x;
+    }
+
+    public void setY(int y) {
+        this.y = y;
     }
 
     // ############################################

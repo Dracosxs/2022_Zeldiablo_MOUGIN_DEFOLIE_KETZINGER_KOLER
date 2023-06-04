@@ -70,6 +70,7 @@ public class LabyJeu implements Jeu {
             if ((this.getLabyrinthe().getJoueur().getX() == this.getLabyrinthe().getListeMonstre().get(i).getX()) &&
                     (this.getLabyrinthe().getJoueur().getY() == this.getLabyrinthe().getListeMonstre().get(i).getY())) {
                 fin = true;
+                break;
             }
         }
         return fin;

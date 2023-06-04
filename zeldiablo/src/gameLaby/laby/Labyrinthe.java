@@ -206,7 +206,7 @@ public class Labyrinthe {
      */
     public void deplacerPerso(String action) {
         // case courante
-        int[] courante = {this.joueur.x, this.joueur.y};
+        int[] courante = {this.joueur.getX(), this.joueur.getY()};
 
         // calcule case suivante
         int[] suivante = getSuivant(courante[0], courante[1], action);
@@ -214,8 +214,8 @@ public class Labyrinthe {
         // si c'est pas un mur, on effectue le deplacement
         if ((!this.murs[suivante[0]][suivante[1]]) && (!this.getMonstrePresent(suivante[0], suivante[1]))) {
             // on met a jour personnage
-            this.joueur.x = suivante[0];
-            this.joueur.y = suivante[1];
+            this.joueur.setX(suivante[0]);
+            this.joueur.setY(suivante[1]);
             for (Piece piece : ListePiece){
                 if ((this.joueur.getX() == piece.getX()) && (this.joueur.getY() == piece.getY())){
                     this.joueur.PieceRammasee(piece.getX(), piece.getY());

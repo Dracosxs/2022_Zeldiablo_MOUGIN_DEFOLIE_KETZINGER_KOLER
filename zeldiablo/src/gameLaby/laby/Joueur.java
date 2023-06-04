@@ -2,7 +2,7 @@ package gameLaby.laby;
 
 public class Joueur extends Perso{
 
-    int piecesRammassees ;
+    private int piecesRammassees ;
     /**
      * constructeur
      *
@@ -16,7 +16,7 @@ public class Joueur extends Perso{
 
 
     public void PieceRammasee(int xPiece, int yPiece){
-        if ((this.x==xPiece) && (this.y==yPiece)){
+        if ((this.getX()==xPiece) && (this.getY()==yPiece)){
             this.piecesRammassees++;
         }
     }
