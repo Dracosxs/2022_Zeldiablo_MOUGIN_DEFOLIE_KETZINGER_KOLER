@@ -17,6 +17,10 @@ import java.util.ArrayList;
  */
 public class Labyrinthe {
 
+    // ##################################
+    // Attributs
+    // ##################################
+
     /**
      * Constantes char
      */
@@ -40,29 +44,37 @@ public class Labyrinthe {
     /**
      * attribut du personnage
      */
-    public Joueur joueur;
+    private Joueur joueur;
 
     /**
      * Liste des monstres
      */
-    public ArrayList<Monstre> ListeMosntre = new ArrayList<>();
+    private ArrayList<Monstre> ListeMonstre = new ArrayList<>();
 
     /**
      * Liste des pièces
      */
-    public ArrayList<Piece> ListePiece = new ArrayList<>();
+    private ArrayList<Piece> ListePiece = new ArrayList<>();
 
     /**
      * les murs du labyrinthe
      */
-    public boolean[][] murs;
+    private boolean[][] murs;
 
     /**
      * la sortie du labyrinthe
      */
-    public Sortie sortie;
+    private Sortie sortie;
+
+    /**
+     * fin d jeu
+     */
+    private boolean fin;
 
 
+    // ##################################
+    // Méthode statique
+    // ##################################
 
     /**
      * retourne la case suivante selon une actions
@@ -96,6 +108,11 @@ public class Labyrinthe {
         return new int[]{x, y};
     }
 
+
+    // ##################################
+    // Constructeur
+    // ##################################
+
     /**
      * charge le labyrinthe
      *
@@ -103,9 +120,6 @@ public class Labyrinthe {
      * @return labyrinthe cree
      * @throws IOException probleme a la lecture / ouverture
      */
-
-
-
     public Labyrinthe(String nom) throws IOException {
         // ouvrir fichier
         FileReader fichier = new FileReader(nom);
@@ -151,7 +165,7 @@ public class Labyrinthe {
                         // pas de mur
                         this.murs[colonne][numeroLigne] = false;
                         // ajoute un monstre
-                        this.ListeMosntre.add(new Monstre(colonne, numeroLigne));
+                        this.ListeMonstre.add(new Monstre(colonne, numeroLigne));
                         break;
                     case PIECE:
                         // pas de mur
@@ -174,15 +188,19 @@ public class Labyrinthe {
             ligne = bfRead.readLine();
             numeroLigne++;
         }
-
+        this.fin = false;
         // ferme fichier
         bfRead.close();
     }
 
 
+    // ##################################
+    // Méthodes
+    // ##################################
+
     /**
      * deplace le personnage en fonction de l'action.
-     * gere la collision avec les murs
+     * gere la collision avec les murs et les monstres
      *
      * @param action une des actions possibles
      */
@@ -194,7 +212,7 @@ public class Labyrinthe {
         int[] suivante = getSuivant(courante[0], courante[1], action);
 
         // si c'est pas un mur, on effectue le deplacement
-        if ((!this.murs[suivante[0]][suivante[1]]) && (!this.getM(suivante[0], suivante[1]))) {
+        if ((!this.murs[suivante[0]][suivante[1]]) && (!this.getMonstrePresent(suivante[0], suivante[1]))) {
             // on met a jour personnage
             this.joueur.x = suivante[0];
             this.joueur.y = suivante[1];
@@ -208,7 +226,12 @@ public class Labyrinthe {
         }
     }
 
-
+    /**
+     * deplace le monstre en fonction de l'action choisi par Dijkstra.
+     * gere la collision avec les murs et les monstres
+     *
+     * @param i correspondant à l'indice du monstre à déplacer
+     */
 
     public void deplacerMonstre(int i) throws IOException {
         int alea = 1 /**(int) Math.floor(Math.random()*4)*/;
@@ -217,16 +240,16 @@ public class Labyrinthe {
         action = getProchaineAction(i);
 
         // case courante
-        int[] courante = {this.ListeMosntre.get(i).getX(), this.ListeMosntre.get(i).getY()};
+        int[] courante = {this.ListeMonstre.get(i).getX(), this.ListeMonstre.get(i).getY()};
 
         // calcule case suivante
         int[] suivante = getSuivant(courante[0], courante[1], action);
 
         // si ce n'est pas un mur, on effectue le déplacement avec délai
-            if ((!this.murs[suivante[0]][suivante[1]]) && (!this.getM(suivante[0], suivante[1]))) {
+            if ((!this.murs[suivante[0]][suivante[1]]) && (!this.getMonstrePresent(suivante[0], suivante[1]))) {
                 // on met a jour personnage
-                this.ListeMosntre.remove(i) ;
-                this.ListeMosntre.add(i, new Monstre(suivante[0], suivante[1]));
+                this.ListeMonstre.remove(i) ;
+                this.ListeMonstre.add(i, new Monstre(suivante[0], suivante[1]));
 
             }
     }
@@ -234,85 +257,23 @@ public class Labyrinthe {
 
 
     /**
-     * jamais fini
+     * fin si le joueur se trouve sur la case de sortie et qu'il a ramassé toutes les pièces
      *
      * @return fin du jeu
      */
-    public boolean etreFini() {
-        return false;
-    }
-
-    // ##################################
-    // GETTER
-    // ##################################
-
-    /**
-     * return taille selon Y
-     *
-     * @return
-     */
-    public int getLengthY() {
-        return murs[0].length;
-    }
-
-    /**
-     * return taille selon X
-     *
-     * @return
-     */
-    public int getLength() {
-        return murs.length;
-    }
-
-    /**
-     * return mur en (i,j)
-     * @param x
-     * @param y
-     * @return
-     */
-    public boolean getMur(int x, int y) {
-        // utilise le tableau de boolean
-        return this.murs[x][y];
-    }
-
-    public Perso getJoueur() {
-        return joueur;
-    }
-
-    public boolean[][] getMurs() {
-        return murs;
-    }
-
-
-    public Sortie getSortie() {
-        return sortie;
-    }
-
-
-
-    public boolean getM(int dx, int dy){
-        boolean present = false;
-        for (Monstre monstre : this.ListeMosntre){
-            if ((monstre.getX() == dx) && (monstre.getY() == dy)){
-                present = true;
-            }
+    public void etreFini() {
+        if ((this.joueur.getX() == this.sortie.getX()) && (this.joueur.getY() == this.sortie.getY()) && (this.sortie.etreAffiche())){
+            this.fin = true;
         }
-        return present;
-    }
-
-    public boolean getPiecePresente(int dx, int dy){
-        boolean present = false;
-        for (Piece piece : this.ListePiece){
-            if ((piece.getX() == dx) && (piece.getY() == dy)){
-                present = true;
-            }
-        }
-        return present;
     }
 
     public void pieceRamassee(Piece piece){
         this.ListePiece.remove(piece);
     }
+
+    // ##################################
+    // Méthodes utiles à Dijkstra
+    // ##################################
 
     public GrapheListe genererGraphe() throws IOException {
         // Création du graphe vide
@@ -384,8 +345,8 @@ public class Labyrinthe {
     }
 
     public String getProchaineAction(int indiceMonstre) throws IOException {
-        int xMonstre = this.ListeMosntre.get(indiceMonstre).getX();
-        int yMonstre = this.ListeMosntre.get(indiceMonstre).getY();
+        int xMonstre = this.ListeMonstre.get(indiceMonstre).getX();
+        int yMonstre = this.ListeMonstre.get(indiceMonstre).getY();
         int xJ = this.joueur.getX();
         int yJ = this.joueur.getY();
         String action = "";
@@ -415,6 +376,75 @@ public class Labyrinthe {
         return action;
     }
 
+    // ##################################
+    // GETTER
+    // ##################################
 
+    /**
+     * return taille selon Y
+     *
+     * @return
+     */
+    public int getLengthY() {
+        return murs[0].length;
+    }
+
+    /**
+     * return taille selon X
+     *
+     * @return
+     */
+    public int getLength() {
+        return murs.length;
+    }
+
+    /**
+     * return mur en (i,j)
+     * @param x
+     * @param y
+     * @return
+     */
+    public boolean getMur(int x, int y) {
+        // utilise le tableau de boolean
+        return this.murs[x][y];
+    }
+
+    public Joueur getJoueur() {
+        return joueur;
+    }
+
+
+    public Sortie getSortie() {
+        return sortie;
+    }
+
+
+    public boolean getMonstrePresent(int dx, int dy){
+        boolean present = false;
+        for (Monstre monstre : this.ListeMonstre){
+            if ((monstre.getX() == dx) && (monstre.getY() == dy)){
+                present = true;
+            }
+        }
+        return present;
+    }
+
+    public boolean getPiecePresente(int dx, int dy){
+        boolean present = false;
+        for (Piece piece : this.ListePiece){
+            if ((piece.getX() == dx) && (piece.getY() == dy)){
+                present = true;
+            }
+        }
+        return present;
+    }
+
+    public boolean getFin(){
+        return this.fin;
+    }
+
+    public ArrayList<Monstre> getListeMonstre() {
+        return ListeMonstre;
+    }
 
 }

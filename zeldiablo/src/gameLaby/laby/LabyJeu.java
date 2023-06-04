@@ -21,18 +21,22 @@ public class LabyJeu implements Jeu {
     @Override
     public void update(double secondes, Clavier clavier) throws IOException {
         // deplace le personnage en fonction des touches
-        if ((!etreFini()) && (TotalPiece != this.labyrinthe.joueur.getPiecesRammassees())) {
+        if ((!etreFini()) && (TotalPiece != this.labyrinthe.getJoueur().getPiecesRammassees())) {
             deplacementClavier(clavier);
-            for (int i = 0; i < this.getLabyrinthe().ListeMosntre.size(); i++) {
+            for (int i = 0; i < this.getLabyrinthe().getListeMonstre().size(); i++) {
                 this.labyrinthe.deplacerMonstre(i);
             }
-        } else if (TotalPiece == this.labyrinthe.joueur.getPiecesRammassees()) {
-            for (int i = 0; i < this.getLabyrinthe().ListeMosntre.size(); i++){
-                this.labyrinthe.ListeMosntre.remove(this.labyrinthe.ListeMosntre.get(i));
+        } else if ((TotalPiece == this.labyrinthe.getJoueur().getPiecesRammassees()) && (!this.labyrinthe.getFin())) {
+            for (int i = 0; i < this.getLabyrinthe().getListeMonstre().size(); i++){
+                this.labyrinthe.getListeMonstre().remove(this.labyrinthe.getListeMonstre().get(i));
             }
-            this.labyrinthe.sortie.afficherSortie();
+            this.labyrinthe.getSortie().afficherSortie();
             deplacementClavier(clavier);
+            this.labyrinthe.etreFini();
 
+        }
+        else {
+            // implémente la fin du jeu/ou le niveau suivant
         }
     }
 
@@ -62,8 +66,9 @@ public class LabyJeu implements Jeu {
     @Override
     public boolean etreFini() {
         boolean fin = false;
-        for (int i = 0; i < this.getLabyrinthe().ListeMosntre.size(); i++) {
-            if ((this.getLabyrinthe().joueur.getX() == this.getLabyrinthe().ListeMosntre.get(i).getX()) && (this.getLabyrinthe().joueur.getY() == this.getLabyrinthe().ListeMosntre.get(i).getY())) {
+        for (int i = 0; i < this.getLabyrinthe().getListeMonstre().size(); i++) {
+            if ((this.getLabyrinthe().getJoueur().getX() == this.getLabyrinthe().getListeMonstre().get(i).getX()) &&
+                    (this.getLabyrinthe().getJoueur().getY() == this.getLabyrinthe().getListeMonstre().get(i).getY())) {
                 fin = true;
             }
         }

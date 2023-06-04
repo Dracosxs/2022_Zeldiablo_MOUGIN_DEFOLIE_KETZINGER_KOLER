@@ -24,7 +24,7 @@ public class MainLaby {
                     System.out.print('X');
                 else if ((l.getLabyrinthe().getJoueur().getX()==x) && (l.getLabyrinthe().getJoueur().getY()==y)) {
                     System.out.print('P');
-                }else if (l.getLabyrinthe().getM(x, y)) {
+                }else if (l.getLabyrinthe().getMonstrePresent(x, y)) {
                     System.out.print("M");
                 }
                 else {

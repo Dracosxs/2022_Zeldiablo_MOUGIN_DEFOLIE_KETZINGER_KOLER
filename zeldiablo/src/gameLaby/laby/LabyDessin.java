@@ -56,7 +56,7 @@ public class LabyDessin implements DessinJeu {
                     gc.fillRect(laby.tailleCase*x, laby.tailleCase*y, laby.tailleCase, laby.tailleCase);
                     gc.drawImage(imagePNJ, laby.tailleCase * x, laby.tailleCase * y);
 
-                }else if (laby.getLabyrinthe().getM(x, y)) {
+                }else if (laby.getLabyrinthe().getMonstrePresent(x, y)) {
                     gc.setFill(Color.web("302415"));
                     gc.fillRect(laby.tailleCase*x, laby.tailleCase*y, laby.tailleCase, laby.tailleCase);
                     gc.drawImage(imageMONSTRE, laby.tailleCase * x, laby.tailleCase * y);
