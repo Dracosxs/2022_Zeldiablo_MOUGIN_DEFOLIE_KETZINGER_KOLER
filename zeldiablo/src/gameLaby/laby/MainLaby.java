@@ -13,18 +13,18 @@ public class MainLaby {
         int fps = 10;
 
         LabyJeu l = new LabyJeu("labySimple/laby2.txt");
-        int largeur = l.getL().getLength()*50;
-        int hauteur = l.getL().getLengthY()*50;
+        int largeur = l.getLabyrinthe().getLength()*50;
+        int hauteur = l.getLabyrinthe().getLengthY()*50;
 
         //vérification dans le terminal que la laby est bien chargé
-        for (int y = 0; y < l.getL().getLengthY(); y++) {
+        for (int y = 0; y < l.getLabyrinthe().getLengthY(); y++) {
             // affiche la ligne
-            for (int x = 0; x < l.getL().getLength(); x++) {
-                if (l.getL().getMur(x, y))
+            for (int x = 0; x < l.getLabyrinthe().getLength(); x++) {
+                if (l.getLabyrinthe().getMur(x, y))
                     System.out.print('X');
-                else if ((l.getL().getJ().getX()==x) && (l.getL().getJ().getY()==y)) {
+                else if ((l.getLabyrinthe().getJoueur().getX()==x) && (l.getLabyrinthe().getJoueur().getY()==y)) {
                     System.out.print('P');
-                }else if (l.getL().getM(x, y)) {
+                }else if (l.getLabyrinthe().getM(x, y)) {
                     System.out.print("M");
                 }
                 else {
@@ -34,6 +34,7 @@ public class MainLaby {
             // saut de ligne
             System.out.println();
         }
+
         LabyDessin ld = new LabyDessin();
 
         MoteurJeu.setFPS(fps);

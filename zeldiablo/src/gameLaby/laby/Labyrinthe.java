@@ -8,9 +8,6 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
-import javafx.animation.PauseTransition;
-import javafx.util.Duration;
-
 
 
 /**
@@ -43,17 +40,17 @@ public class Labyrinthe {
     /**
      * attribut du personnage
      */
-    public Joueur j;
+    public Joueur joueur;
 
     /**
      * Liste des monstres
      */
-    public ArrayList<Monstre> m = new ArrayList<>();
+    public ArrayList<Monstre> ListeMosntre = new ArrayList<>();
 
     /**
      * Liste des pièces
      */
-    public ArrayList<Piece> p = new ArrayList<>();
+    public ArrayList<Piece> ListePiece = new ArrayList<>();
 
     /**
      * les murs du labyrinthe
@@ -122,7 +119,7 @@ public class Labyrinthe {
 
         // creation labyrinthe vide
         this.murs = new boolean[nbColonnes][nbLignes];
-        this.j = null;
+        this.joueur = null;
 
 
         // lecture des cases
@@ -148,19 +145,19 @@ public class Labyrinthe {
                         // pas de mur
                         this.murs[colonne][numeroLigne] = false;
                         // ajoute joueur
-                        this.j = new Joueur(colonne, numeroLigne);
+                        this.joueur = new Joueur(colonne, numeroLigne);
                         break;
                     case MONSTRE:
                         // pas de mur
                         this.murs[colonne][numeroLigne] = false;
                         // ajoute un monstre
-                        this.m.add(new Monstre(colonne, numeroLigne));
+                        this.ListeMosntre.add(new Monstre(colonne, numeroLigne));
                         break;
                     case PIECE:
                         // pas de mur
                         this.murs[colonne][numeroLigne] = false;
                         // ajoute un monstre
-                        this.p.add(new Piece(colonne, numeroLigne));
+                        this.ListePiece.add(new Piece(colonne, numeroLigne));
                         break;
                     case SORTIE:
                         // pas de mur
@@ -191,7 +188,7 @@ public class Labyrinthe {
      */
     public void deplacerPerso(String action) {
         // case courante
-        int[] courante = {this.j.x, this.j.y};
+        int[] courante = {this.joueur.x, this.joueur.y};
 
         // calcule case suivante
         int[] suivante = getSuivant(courante[0], courante[1], action);
@@ -199,11 +196,11 @@ public class Labyrinthe {
         // si c'est pas un mur, on effectue le deplacement
         if ((!this.murs[suivante[0]][suivante[1]]) && (!this.getM(suivante[0], suivante[1]))) {
             // on met a jour personnage
-            this.j.x = suivante[0];
-            this.j.y = suivante[1];
-            for (Piece piece : p){
-                if ((this.j.getX() == piece.getX()) && (this.j.getY() == piece.getY())){
-                    this.j.PieceRammasee(piece.getX(), piece.getY());
+            this.joueur.x = suivante[0];
+            this.joueur.y = suivante[1];
+            for (Piece piece : ListePiece){
+                if ((this.joueur.getX() == piece.getX()) && (this.joueur.getY() == piece.getY())){
+                    this.joueur.PieceRammasee(piece.getX(), piece.getY());
                     piece.setPieceRecuperee();
                     pieceRamassee(piece);
                 }
@@ -220,7 +217,7 @@ public class Labyrinthe {
         action = getProchaineAction(i);
 
         // case courante
-        int[] courante = {this.m.get(i).getX(), this.m.get(i).getY()};
+        int[] courante = {this.ListeMosntre.get(i).getX(), this.ListeMosntre.get(i).getY()};
 
         // calcule case suivante
         int[] suivante = getSuivant(courante[0], courante[1], action);
@@ -228,8 +225,8 @@ public class Labyrinthe {
         // si ce n'est pas un mur, on effectue le déplacement avec délai
             if ((!this.murs[suivante[0]][suivante[1]]) && (!this.getM(suivante[0], suivante[1]))) {
                 // on met a jour personnage
-                this.m.remove(i) ;
-                this.m.add(i, new Monstre(suivante[0], suivante[1]));
+                this.ListeMosntre.remove(i) ;
+                this.ListeMosntre.add(i, new Monstre(suivante[0], suivante[1]));
 
             }
     }
@@ -278,8 +275,8 @@ public class Labyrinthe {
         return this.murs[x][y];
     }
 
-    public Perso getJ() {
-        return j;
+    public Perso getJoueur() {
+        return joueur;
     }
 
     public boolean[][] getMurs() {
@@ -295,7 +292,7 @@ public class Labyrinthe {
 
     public boolean getM(int dx, int dy){
         boolean present = false;
-        for (Monstre monstre : this.m){
+        for (Monstre monstre : this.ListeMosntre){
             if ((monstre.getX() == dx) && (monstre.getY() == dy)){
                 present = true;
             }
@@ -305,7 +302,7 @@ public class Labyrinthe {
 
     public boolean getPiecePresente(int dx, int dy){
         boolean present = false;
-        for (Piece piece : this.p){
+        for (Piece piece : this.ListePiece){
             if ((piece.getX() == dx) && (piece.getY() == dy)){
                 present = true;
             }
@@ -314,7 +311,7 @@ public class Labyrinthe {
     }
 
     public void pieceRamassee(Piece piece){
-        this.p.remove(piece);
+        this.ListePiece.remove(piece);
     }
 
     public GrapheListe genererGraphe() throws IOException {
@@ -387,10 +384,10 @@ public class Labyrinthe {
     }
 
     public String getProchaineAction(int indiceMonstre) throws IOException {
-        int xMonstre = this.m.get(indiceMonstre).getX();
-        int yMonstre = this.m.get(indiceMonstre).getY();
-        int xJ = this.j.getX();
-        int yJ = this.j.getY();
+        int xMonstre = this.ListeMosntre.get(indiceMonstre).getX();
+        int yMonstre = this.ListeMosntre.get(indiceMonstre).getY();
+        int xJ = this.joueur.getX();
+        int yJ = this.joueur.getY();
         String action = "";
         String depart = xMonstre + ", " + yMonstre;
         String arrivee = xJ + ", " + yJ;
