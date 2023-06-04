@@ -5,6 +5,7 @@ import moteurJeu.Jeu;
 
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class LabyJeu implements Jeu {
 
@@ -13,7 +14,7 @@ public class LabyJeu implements Jeu {
 
     private Labyrinthe labyrinthe;
 
-    public LabyJeu(String nomFichier) throws IOException {
+    public LabyJeu(ArrayList<String> nomFichier) throws IOException {
         this.labyrinthe = new Labyrinthe(nomFichier);
         TotalPiece = this.labyrinthe.getListePiece().size();
     }
@@ -27,15 +28,14 @@ public class LabyJeu implements Jeu {
                 this.labyrinthe.deplacerMonstre(i);
             }
         } else if ((TotalPiece == this.labyrinthe.getJoueur().getPiecesRammassees()) && (!this.labyrinthe.getFin())) {
-            for (int i = 0; i < this.getLabyrinthe().getListeMonstre().size(); i++){
+            for (int i = 0; i < this.getLabyrinthe().getListeMonstre().size(); i++) {
                 this.labyrinthe.getListeMonstre().remove(this.labyrinthe.getListeMonstre().get(i));
             }
             this.labyrinthe.getSortie().afficherSortie();
             deplacementClavier(clavier);
             this.labyrinthe.etreFini();
 
-        }
-        else {
+        } else {
             // implémente la fin du jeu/ou le niveau suivant
         }
     }

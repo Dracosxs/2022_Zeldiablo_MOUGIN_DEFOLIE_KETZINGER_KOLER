@@ -38,7 +38,7 @@ public class Labyrinthe {
     public static final String BAS = "Bas";
     public static final String GAUCHE = "Gauche";
     public static final String DROITE = "Droite";
-
+    private ArrayList<String> nomFichiers;
 
 
     /**
@@ -120,9 +120,14 @@ public class Labyrinthe {
      * @return labyrinthe cree
      * @throws IOException probleme a la lecture / ouverture
      */
-    public Labyrinthe(String nom) throws IOException {
+    public Labyrinthe(ArrayList<String> nom) throws IOException {
+
+        this.nomFichiers = nom;
+
+        String varFichier = this.nomFichiers.get(0);
+        this.nomFichiers.remove(0);
         // ouvrir fichier
-        FileReader fichier = new FileReader(nom);
+        FileReader fichier = new FileReader(varFichier);
         BufferedReader bfRead = new BufferedReader(fichier);
 
         int nbLignes, nbColonnes;
@@ -266,6 +271,8 @@ public class Labyrinthe {
             this.fin = true;
         }
     }
+
+
 
     public void pieceRamassee(Piece piece){
         this.ListePiece.remove(piece);

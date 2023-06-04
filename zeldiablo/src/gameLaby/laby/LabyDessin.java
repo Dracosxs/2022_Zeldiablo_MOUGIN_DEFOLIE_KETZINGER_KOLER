@@ -6,10 +6,12 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
 import moteurJeu.DessinJeu;
+import moteurJeu.FrameStats;
 import moteurJeu.Jeu;
 
 public class LabyDessin implements DessinJeu {
 
+    private static boolean dernierActe = false;
     public static Image imageMUR;
 
     public static Image imagePNJ;
@@ -40,48 +42,59 @@ public class LabyDessin implements DessinJeu {
         // recupere un pinceau pour dessiner
         GraphicsContext gc = canvas.getGraphicsContext2D();
 
-//        gc.drawImage(imageMur, 10 * 80,  10 * 80);
 
+        if (!dernierActe) {
 
+            for (int y = 0; y < laby.getLabyrinthe().getLengthY(); y++) {
+                // affiche la ligne
+                for (int x = 0; x < laby.getLabyrinthe().getLength(); x++) {
+                    if (laby.getLabyrinthe().getMur(x, y)) {
+                        gc.fillRect(laby.tailleCase * x, laby.tailleCase * y, laby.tailleCase, laby.tailleCase);
+                        gc.drawImage(imageMUR, laby.tailleCase * x, laby.tailleCase * y);
 
-        for (int y = 0; y < laby.getLabyrinthe().getLengthY(); y++) {
-            // affiche la ligne
-            for (int x = 0; x < laby.getLabyrinthe().getLength(); x++) {
-                if (laby.getLabyrinthe().getMur(x, y)) {
-                    gc.fillRect(laby.tailleCase*x, laby.tailleCase*y, laby.tailleCase, laby.tailleCase);
-                    gc.drawImage(imageMUR, laby.tailleCase * x, laby.tailleCase * y);
-
-                }else if ((laby.getLabyrinthe().getJoueur().getX()==x) && (laby.getLabyrinthe().getJoueur().getY()==y)) {
-                    gc.setFill(Color.web("302415"));
-                    gc.fillRect(laby.tailleCase*x, laby.tailleCase*y, laby.tailleCase, laby.tailleCase);
-                    gc.drawImage(imagePNJ, laby.tailleCase * x, laby.tailleCase * y);
-
-                }else if (laby.getLabyrinthe().getMonstrePresent(x, y)) {
-                    gc.setFill(Color.web("302415"));
-                    gc.fillRect(laby.tailleCase*x, laby.tailleCase*y, laby.tailleCase, laby.tailleCase);
-                    gc.drawImage(imageMONSTRE, laby.tailleCase * x, laby.tailleCase * y);
-
-                } else if (laby.getLabyrinthe().getPiecePresente(x, y)) {
-                    gc.setFill(Color.web("302415"));
-                    gc.fillRect(laby.tailleCase*x, laby.tailleCase*y, laby.tailleCase, laby.tailleCase);
-                    gc.drawImage(imagePIECE, laby.tailleCase * x, laby.tailleCase * y);
-                }
-                else if (laby.getLabyrinthe().getSortie().getX() == x && laby.getLabyrinthe().getSortie().getY() == y ) {
-                    if (laby.getLabyrinthe().getSortie().etreAffiche()){
+                    } else if ((laby.getLabyrinthe().getJoueur().getX() == x) && (laby.getLabyrinthe().getJoueur().getY() == y)) {
                         gc.setFill(Color.web("302415"));
                         gc.fillRect(laby.tailleCase * x, laby.tailleCase * y, laby.tailleCase, laby.tailleCase);
-                        gc.drawImage(imageSORTIE, laby.tailleCase * x, laby.tailleCase * y);
-                    }
-                    else {
+                        gc.drawImage(imagePNJ, laby.tailleCase * x, laby.tailleCase * y);
+
+                    } else if (laby.getLabyrinthe().getMonstrePresent(x, y)) {
+                        gc.setFill(Color.web("302415"));
+                        gc.fillRect(laby.tailleCase * x, laby.tailleCase * y, laby.tailleCase, laby.tailleCase);
+                        gc.drawImage(imageMONSTRE, laby.tailleCase * x, laby.tailleCase * y);
+
+                    } else if (laby.getLabyrinthe().getPiecePresente(x, y)) {
+                        gc.setFill(Color.web("302415"));
+                        gc.fillRect(laby.tailleCase * x, laby.tailleCase * y, laby.tailleCase, laby.tailleCase);
+                        gc.drawImage(imagePIECE, laby.tailleCase * x, laby.tailleCase * y);
+                    } else if (laby.getLabyrinthe().getSortie().getX() == x && laby.getLabyrinthe().getSortie().getY() == y) {
+                        if (laby.getLabyrinthe().getSortie().etreAffiche()) {
+                            gc.setFill(Color.web("302415"));
+                            gc.fillRect(laby.tailleCase * x, laby.tailleCase * y, laby.tailleCase, laby.tailleCase);
+                            gc.drawImage(imageSORTIE, laby.tailleCase * x, laby.tailleCase * y);
+                        } else {
+                            gc.setFill(Color.web("302415"));
+                            gc.fillRect(laby.tailleCase * x, laby.tailleCase * y, laby.tailleCase, laby.tailleCase);
+                        }
+                    } else {
                         gc.setFill(Color.web("302415"));
                         gc.fillRect(laby.tailleCase * x, laby.tailleCase * y, laby.tailleCase, laby.tailleCase);
                     }
-                } else {
-                    gc.setFill(Color.web("302415"));
-                    gc.fillRect(laby.tailleCase*x, laby.tailleCase*y, laby.tailleCase, laby.tailleCase);
                 }
             }
+
+        } else {
+            if (laby.getLabyrinthe().getFin()) {
+                //Fin du jeu car tous les labyrinthes sont termines
+                dernierActe = true;
+//                gc.setFill(Color.GRAY);
+//                gc.fillRect(canvas.getWidth() / 2 - 150, canvas.getHeight() / 2 - 60, 300, 120);
+//                gc.setFill(Color.WHITE);
+//                String fin = "Bravo! Vous avez gagné !";
+//                gc.fillText(fin, canvas.getWidth() / 2 - 130, canvas.getHeight() / 2, 1000);
+            }
+
         }
+
 
     }
 }

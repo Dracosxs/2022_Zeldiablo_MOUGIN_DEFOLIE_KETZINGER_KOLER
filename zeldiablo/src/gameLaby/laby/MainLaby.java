@@ -5,6 +5,7 @@ package gameLaby.laby;
 import moteurJeu.MoteurJeu;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class MainLaby {
 
@@ -12,7 +13,18 @@ public class MainLaby {
 
         int fps = 10;
 
-        LabyJeu l = new LabyJeu("labySimple/laby2.txt");
+        ArrayList<String> listeDeFichiers = new ArrayList<String>();
+
+
+        listeDeFichiers.add("labySimple/laby0.txt");
+
+        listeDeFichiers.add("labySimple/laby1.txt");
+
+        listeDeFichiers.add("labySimple/laby2.txt");
+
+
+
+        LabyJeu l = new LabyJeu(listeDeFichiers);
         int largeur = l.getLabyrinthe().getLength()*50;
         int hauteur = l.getLabyrinthe().getLengthY()*50;
 
