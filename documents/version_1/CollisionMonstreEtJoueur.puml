@@ -7,30 +7,24 @@ participant "Laby:Labyrinthe" as Laby
 participant "p:Perso" as P
 participant "m:Monstre" as M
 
-Utilisateur -> Laby: Déplacer le joueur (x, y)
+Utilisateur -> Laby: deplacerPerso(String)
 activate Laby
-
-Laby -> Laby: Vérifier la collision avec un monstre (x, y)
-activate Laby
-Laby --> Utilisateur: Collision avec un monstre détectée
-deactivate Laby
-
-Laby -> Laby: Vérifier la présence d'un monstre (x, y)
-activate Laby
-Laby --> Laby: Renvoyer vrai si monstre présent
-deactivate Laby
-
-Laby -> P: Récupérer la position du joueur
+Laby -> P: getX()
 activate P
-P --> Laby: Position du joueur (x, y)
+Laby <-- P: X
+Laby -> P: getY()
+Laby <-- P: Y
 deactivate P
-
-Laby -> M: Récupérer la position du monstre
+Laby -> M: getX()
 activate M
-M --> Laby: Position du monstre (x, y)
+Laby <-- M: X
+Laby -> M: getY()
+Laby <-- M: Y
 deactivate M
-
-Laby --> Utilisateur: Collision avec un monstre détectée
+Laby -> Laby: getSuivant(x,y,String)
+Laby -> Laby: getMonstrePresent(x,y)
+Laby --> Utilisateur
 deactivate Laby
+
 
 @enduml

@@ -1,0 +1,17 @@
+@startuml
+
+actor Héros
+participant "Laby:Labyrinthe" as Lab
+participant "d:Dijkstra" as Dijkstra
+
+activate Héros
+Héros -> Lab: Déplacement du héros
+activate Lab
+Lab -> Dijkstra: resoudre(generergraphe():Graphe,posdepart:String)
+Dijkstra --> Lab: Valeur
+Lab --> Héros: Mise à jour de la position du monstre
+
+deactivate Lab
+deactivate Héros
+
+ @enduml
