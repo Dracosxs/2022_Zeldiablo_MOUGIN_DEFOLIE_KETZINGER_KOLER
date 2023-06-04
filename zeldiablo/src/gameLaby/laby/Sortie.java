@@ -21,10 +21,6 @@ public class Sortie {
         }
 
 
-        public void cacherSortie() {
-            this.affiche = false;
-        }
-
 
         public boolean etreAffiche() {
             return this.affiche;
