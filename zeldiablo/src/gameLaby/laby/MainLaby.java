@@ -25,8 +25,8 @@ public class MainLaby {
 
 
         LabyJeu l = new LabyJeu(listeDeFichiers);
-        int largeur = l.getLabyrinthe().getLength()*50;
-        int hauteur = l.getLabyrinthe().getLengthY()*50;
+        int largeur = l.getLabyrinthe().getLength()*60;
+        int hauteur = l.getLabyrinthe().getLengthY()*60;
 
         //vérification dans le terminal que la laby est bien chargé
         for (int y = 0; y < l.getLabyrinthe().getLengthY(); y++) {
