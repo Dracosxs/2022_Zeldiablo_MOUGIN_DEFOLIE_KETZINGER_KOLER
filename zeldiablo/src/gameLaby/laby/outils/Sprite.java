@@ -56,7 +56,7 @@ public class Sprite {
 
  static {
   try {
-   SORTIE = new Image(new FileInputStream("Ressources/piece.jpg"), 50, 50, false, false);
+   SORTIE = new Image(new FileInputStream("Ressources/porte.png"), 50, 50, false, false);
   } catch (FileNotFoundException e) {
    throw new RuntimeException(e);
   }
