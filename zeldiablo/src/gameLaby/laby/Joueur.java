@@ -2,7 +2,7 @@ package gameLaby.laby;
 
 public class Joueur extends Perso{
 
-    private int piecesRammassees ;
+    private int piecesRamassees;
     /**
      * constructeur
      *
@@ -11,17 +11,17 @@ public class Joueur extends Perso{
      */
     public Joueur(int dx, int dy) {
         super(dx, dy);
-        this.piecesRammassees = 0;
+        this.piecesRamassees = 0;
     }
 
 
-    public void PieceRammasee(int xPiece, int yPiece){
+    public void PieceRamasee(int xPiece, int yPiece){
         if ((this.getX()==xPiece) && (this.getY()==yPiece)){
-            this.piecesRammassees++;
+            this.piecesRamassees++;
         }
     }
 
-    public int getPiecesRammassees() {
-        return piecesRammassees;
+    public int getPiecesRamassees() {
+        return piecesRamassees;
     }
 }

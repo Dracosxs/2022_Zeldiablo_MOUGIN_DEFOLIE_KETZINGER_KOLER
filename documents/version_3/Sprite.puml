@@ -1,0 +1,156 @@
+@startuml
+skinparam monochrome true
+
+actor Utilisateur
+
+participant "dessin:LabyDessin" as dessin
+participant "Jeu:LabyJeu" as Jeu
+participant "laby:Labyrinthe" as laby
+participant "sprite:Sprite" as sprite
+participant "joueur:Joueur" as joueur
+participant "monstres:ArrayList<Monstre>" as monstres
+participant "pieces:ArrayList<Piece>" as pieces
+participant "sortie:Sortie" as sortie
+
+Utilisateur -> dessin: dessinerJeu(Jeu, Canvas)
+activate dessin
+dessin -> Jeu: getLabyrinthe()
+activate Jeu
+dessin <-- Jeu: Labyrinthe
+deactivate Jeu
+dessin -> laby: getLengthY()
+activate laby
+dessin <-- laby: Y (int)
+deactivate laby
+loop int i, i<Y
+    dessin -> laby: getLength()
+    activate laby
+    dessin <-- laby: i (int)
+    deactivate laby
+    loop int j, j<X
+       dessin -> laby: getMur(i, j)
+       activate laby
+       dessin <-- laby: boolean
+       deactivate laby
+       alt true
+         Utilisateur <-- dessin: setFill(Color())
+         Utilisateur <-- dessin: fillRect(int, int, int, int)
+         dessin -> sprite: Sprite.MUR
+         activate sprite
+         dessin <-- sprite: image
+         deactivate sprite
+         Utilisateur <-- dessin: drawImage(image, int, int)
+       else
+         dessin -> laby: getJoueur()
+         activate laby
+         dessin <-- laby: Joueur
+         deactivate laby
+         dessin -> joueur: getX()
+         activate joueur
+         dessin <-- joueur: XJoueur
+         deactivate joueur
+         dessin -> joueur: getY()
+         activate joueur
+         dessin <-- joueur: YJoueur
+         deactivate joueur
+         alt XJoueur == i && YJoueur == j
+           Utilisateur <-- dessin: setFill(Color())
+           Utilisateur <-- dessin: fillRect(int, int, int, int)
+           dessin -> sprite: Sprite.PNJ
+           activate sprite
+           dessin <-- sprite: image
+           deactivate sprite
+           Utilisateur <-- dessin: drawImage(image, int, int)
+         else
+           dessin -> laby: getMonstrePresent(X, Y)
+           activate laby
+           loop int k, k < laby.listeMonstre.size()
+             laby -> monstres: get(k).getX()
+             activate monstres
+             laby <-- monstres: X
+             deactivate monstres
+             laby -> monstres: get(k).getY()
+             activate monstres
+             laby <-- monstres: Y
+             deactivate monstres
+             alt X==i &&  Y==j
+               dessin <-- laby: true
+             else
+               dessin <-- laby: false
+             end
+           end
+           deactivate laby
+           alt true
+             Utilisateur <-- dessin: setFill(Color())
+             Utilisateur <-- dessin: fillRect(int, int, int, int)
+             dessin -> sprite: Sprite.MONSTRE
+             activate sprite
+             dessin <-- sprite: image
+             deactivate sprite
+             Utilisateur <-- dessin: drawImage(image, int, int)
+           else
+             dessin -> laby: getPiecePresente(X, Y)
+             activate laby
+             loop int l, l < laby.listePiece.size()
+               laby -> pieces: get(l).getX()
+               activate pieces
+               laby <-- pieces: X
+               deactivate pieces
+               laby -> pieces: get(l).getY()
+               activate pieces
+               laby <-- pieces: Y
+               deactivate pieces
+               alt X==i &&  Y==j
+                 dessin <-- laby: true
+               else
+                 dessin <-- laby: false
+               end
+             end
+             deactivate laby
+             alt true
+               Utilisateur <-- dessin: setFill(Color())
+               Utilisateur <-- dessin: fillRect(int, int, int, int)
+               dessin -> sprite: Sprite.PIECE
+               activate sprite
+               dessin <-- sprite: image
+               deactivate sprite
+               Utilisateur <-- dessin: drawImage(image, int, int)
+             else
+               dessin -> laby: getSortie()
+               activate laby
+               dessin <-- laby: Sortie
+               deactivate laby
+               dessin -> sortie: getX()
+               activate sortie
+               dessin <-- sortie: XSortie
+               deactivate sortie
+               dessin -> sortie: getY()
+               activate sortie
+               dessin <-- sortie: YSortie
+               deactivate sortie
+               dessin -> sortie: etreAffiche()
+               activate sortie
+               dessin <-- sortie: boolean
+               deactivate sortie
+               alt XSortie == i && YSortie == j && true
+                 Utilisateur <-- dessin: setFill(Color())
+                 Utilisateur <-- dessin: fillRect(int, int, int, int)
+                 dessin -> sprite: Sprite.SORTIE
+                 activate sprite
+                 dessin <-- sprite: image
+                 deactivate sprite
+                 Utilisateur <-- dessin: drawImage(image, int, int)
+               else
+                 Utilisateur <-- dessin: setFill(Color())
+                 Utilisateur <-- dessin: fillRect(int, int, int, int)
+               end
+             end
+           end
+         end
+       end
+    end
+end
+deactivate dessin
+
+
+@enduml

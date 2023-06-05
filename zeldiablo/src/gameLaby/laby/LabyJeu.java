@@ -24,12 +24,12 @@ public class LabyJeu implements Jeu {
     @Override
     public void update(double secondes, Clavier clavier) throws IOException {
         // deplace le personnage en fonction des touches
-        if ((!etreFini()) && (TotalPiece != this.labyrinthe.getJoueur().getPiecesRammassees())) {
+        if ((!etreFini()) && (TotalPiece != this.labyrinthe.getJoueur().getPiecesRamassees())) {
             deplacementClavier(clavier);
             for (int i = 0; i < this.getLabyrinthe().getListeMonstre().size(); i++) {
                 this.labyrinthe.deplacerMonstre(i);
             }
-        } else if ((TotalPiece == this.labyrinthe.getJoueur().getPiecesRammassees()) && (!this.labyrinthe.getFin())) {
+        } else if ((TotalPiece == this.labyrinthe.getJoueur().getPiecesRamassees()) && (!this.labyrinthe.getFin())) {
             for (int i = 0; i < this.getLabyrinthe().getListeMonstre().size(); i++) {
                 this.labyrinthe.getListeMonstre().remove(this.labyrinthe.getListeMonstre().get(i));
             }
@@ -38,7 +38,7 @@ public class LabyJeu implements Jeu {
             this.labyrinthe.joueurSurSortie();
 
 
-        } else if ((!listeFichier.isEmpty()) && (TotalPiece == this.labyrinthe.getJoueur().getPiecesRammassees())){
+        } else if ((!listeFichier.isEmpty()) && (TotalPiece == this.labyrinthe.getJoueur().getPiecesRamassees())){
             this.labyrinthe = new Labyrinthe(listeFichier);
             TotalPiece = this.getLabyrinthe().getListePiece().size();
 
