@@ -37,10 +37,14 @@ public class LabyJeu implements Jeu {
             deplacementClavier(clavier);
             this.labyrinthe.joueurSurSortie();
 
-        } else {
+
+        } else if ((!listeFichier.isEmpty()) && (TotalPiece == this.labyrinthe.getJoueur().getPiecesRammassees())){
             this.labyrinthe = new Labyrinthe(listeFichier);
-            TotalPiece = 0;
+            TotalPiece = this.getLabyrinthe().getListePiece().size();
+
         }
+
+
     }
 
     public void deplacementClavier(Clavier clavier) {

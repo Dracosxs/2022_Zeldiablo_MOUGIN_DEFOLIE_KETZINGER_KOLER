@@ -89,7 +89,14 @@ public class LabyDessin implements DessinJeu {
             gc.fillText(fin, canvas.getWidth() / 2 - 130, canvas.getHeight() / 2, 1000);
         }
 
-
+        if (laby.etreFini()) {
+            //Fin du jeu car tous les labyrinthes sont termines
+            gc.setFill(Color.GRAY);
+            gc.fillRect(canvas.getWidth() / 2 - 150, canvas.getHeight() / 2 - 60, 300, 120);
+            gc.setFill(Color.WHITE);
+            String fin = "Oh non! Le monstre vous a attrapé...";
+            gc.fillText(fin, canvas.getWidth() / 2 - 130, canvas.getHeight() / 2, 1000);
+        }
 
         }
 

@@ -20,7 +20,11 @@ public class MainLaby {
 
         listeDeFichiers.add("labySimple/laby1.txt");
 
+        listeDeFichiers.add("labySimple/DEMONSTRATION.txt");
+
         listeDeFichiers.add("labySimple/laby2.txt");
+
+        listeDeFichiers.add("labySimple/laby3.txt");
 
 
 
