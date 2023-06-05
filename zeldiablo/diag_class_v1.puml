@@ -1,0 +1,84 @@
+@startuml
+
+class Perso{
+	- x : int
+	- y : int
+	+ Perso(dx : int, dy : int)
+	+ etrePresent(dx : int, dy : int) : boolean
+	+ getX() : int
+	+ getY() : int
+	+ nouvellePosition(dx : int, dy : int)
+}
+
+class Joueur {
+    - piecesRammassees : int
+    + Joueur(dx : int, dy : int)
+    + PieceRammasee(xPiece : int, yPiece : int)
+    + getPiecesRammassees() : int
+}
+Perso <|-- Joueur
+
+
+
+class Labyrinthe{
+	+ static final MUR : char = 'X'
+	+ static final PJ : char = 'P'
+	+ static final VIDE : char = '.'
+
+	+ static final HAUT : String = "Haut"
+	+ static final BAS : String = "Bas"
+	+ static final GAUCHE : String = "Gauche"
+	+ static final DROITE : String = "Droite"
+
+    - Perso : pj
+	- ListeMonstre : arrayList<Monstre>
+
+	+ murs : boolean[][]
+
+	+ static getSuivant(x : int, y : int, action : String) : int[]
+	+ Labyrinthe(nom : String)
+	+ deplacerPerso(action : String)
+	+ deplacerMonstre(i : int)
+	+ etreFini() : boolean
+	+ getLengthY() : int
+	+ getLength() : int
+	+ getMur : boolean
+	+ getPerso() : Perso
+}
+
+Labyrinthe "1" -> "*" Monstre : ListeMonstre
+Labyrinthe "1" -> "1" Joueur : joueur
+
+
+class LabyDessin {
+	+ LabyDessin()
+	+ dessinJeu(jeu : Jeu, canvas : Canvas)
+}
+
+class DessinJeu{
+	+ dessinJeu(jeu : Jeu, canvas : Canvas)
+}
+
+LabyDessin ..|> DessinJeu
+
+class LabyJeu{
+	+ LabyJeu()
+	+ update(secondes : double, clavier Clavier)
+	+ init()
+	+ etreFini() : boolean
+	+ getLaby() : Labyrinthe
+}
+
+class Jeu{
+	+ update(secondes : double, clavier Clavier)
+	+ init()
+	+ etreFini() : boolean
+}
+LabyJeu ..|> Jeu
+LabyJeu "*" -> "1" Labyrinthe : labyrinthe
+
+class Monstre{
+    + Monstre(dx : int, dy : int)
+}
+Perso <|-- Monstre
+@enduml
