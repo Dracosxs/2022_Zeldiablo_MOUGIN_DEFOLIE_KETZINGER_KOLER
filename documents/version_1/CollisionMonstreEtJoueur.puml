@@ -22,7 +22,14 @@ Laby -> M: getY()
 Laby <-- M: Y
 deactivate M
 Laby -> Laby: getSuivant(x,y,String)
-Laby -> Laby: getMonstrePresent(x,y)
+alt !getMonstrePresent(x,y)
+    Laby -> P: setX()
+        activate P
+        Laby <-- P:
+        Laby -> P: setY()
+        Laby <-- P:
+        deactivate P
+end
 Laby --> Utilisateur
 deactivate Laby
 
