@@ -13,13 +13,9 @@ public class Sortie {
             this.affiche = false;
         }
 
-
-
-
         public void afficherSortie() {
             this.affiche = true;
         }
-
 
 
         public boolean etreAffiche() {

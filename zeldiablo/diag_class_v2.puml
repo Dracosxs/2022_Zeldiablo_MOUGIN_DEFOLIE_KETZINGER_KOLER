@@ -1,0 +1,163 @@
+@startuml
+
+class Perso{
+	- x : int
+	- y : int
+	+ Perso(dx : int, dy : int)
+	+ etrePresent(dx : int, dy : int) : boolean
+	+ getX() : int
+	+ getY() : int
+	+ nouvellePosition(dx : int, dy : int)
+}
+class Monstre{
+    + Monstre(dx : int, dy : int)
+}
+Perso <|-- Monstre
+class Joueur {
+    - piecesRammassees : int
+    + Joueur(dx : int, dy : int)
+    + PieceRammasee(xPiece : int, yPiece : int)
+    + getPiecesRammassees() : int
+}
+Perso <|-- Joueur
+
+
+class Labyrinthe{
+	+ static final MUR : char = 'X'
+	+ static final PJ : char = 'P'
+	+ static final VIDE : char = '.'
+
+	+ static final HAUT : String = "Haut"
+	+ static final BAS : String = "Bas"
+	+ static final GAUCHE : String = "Gauche"
+	+ static final DROITE : String = "Droite"
+
+    - Perso : pj
+	- ListeMonstre : arrayList<Monstre>
+	- ListeSortie : arrayList<Sortie>
+
+    + fin : boolean
+	+ murs : boolean[][]
+
+	+ getSuivant(x : int, y : int, action : String) : int[]
+	+ Labyrinthe(nom : String)
+	+ deplacerPerso(action : String)
+	+ deplacerMonstre(i : int)
+	+ etreFini() : boolean
+	+ getLengthY() : int
+	+ getLength() : int
+	+ getMur(x : int ,y : int) : boolean
+	+ getJoueur() : Joueur
+	+ getFin() : boolean
+	+ pieceRamassee(Piece)
+    + getAdjacent(x : int, y : int) : int[][]
+    + getProchaineAction(x : int ) : String
+    + getMonstrePresent(x : int, y : int) : boolean
+    + getSortie() : Sortie
+    + getSuivant(x : int, y : int, action : String) : int[]
+    + genererGraphe() : GrapheListe
+    + JoueurSurSortie()
+    + getPiecePresente(x : int, y : int) : boolean
+}
+
+Labyrinthe "1" -> "*" Monstre : ListeMonstre
+Labyrinthe "1" -> "1" Joueur : joueur
+Labyrinthe "1" -> "1" Sortie : sortie
+Labyrinthe "1" -> "*" Piece : ListePiece
+
+
+class LabyDessin {
+	+ LabyDessin()
+	+ dessinJeu(jeu : Jeu, canvas : Canvas)
+}
+
+class DessinJeu{
+	+ dessinJeu(jeu : Jeu, canvas : Canvas)
+}
+
+LabyDessin ..|> DessinJeu
+
+class LabyJeu{
+	+ LabyJeu()
+	+ update(secondes : double, clavier Clavier)
+	+ init()
+	+ etreFini() : boolean
+	+ getLaby() : Labyrinthe
+}
+
+class Jeu{
+	+ update(secondes : double, clavier Clavier)
+	+ init()
+	+ etreFini() : boolean
+}
+LabyJeu ..|> Jeu
+LabyJeu "*" -> "1" Labyrinthe : labyrinthe
+
+class Sortie {
+    - int xPiece;
+    - int yPiece;
+    - boolean affiche;
+
+    + Sortie(x : int, y : int)
+    + afficherSortie() : boolean
+    + etreaffiche() : boolean
+    + getX() : int
+    + getY() : int
+}
+
+class Piece {
+    -int xPiece;
+    -int yPiece;
+    -boolean pieceRecuperee;
+
+    + Piece(x : int, y : int)
+    + setPieceRecuperee() : void
+    + getX() : int
+    + getY() : int
+}
+
+class Dijkstra{
+    +resoudre(g : Graphe , depart : String) : Valeur
+}
+
+class Valeur{
++valeur()
++Map<String Double> valeur
++Map<String, String> parent
++setValeur(String s, Double d) : void
++toString() : String
++getValeur(String s) : Double
++setParent(String s, String p) : void
++getParent(String s) : String
++calculerChemin(String depart) : ArrayList<String>
+}
+
+class Sprite{
++static Image MUR
++static Image PJ
++static Image MONSTRE
++static Image PIECE
++static Image SORTIE
+}
+
+class GrapheListe{
++GrapheListe()
++GrapheListe(int)
++GrapheListe(String)
+-List<String> ensNom
+-List<Noeud> ensNoeuds
++getNombreArcs() : int
++convertisseurMatrice(String) : String
++listeNoeuds() : List<String>
++toString() : String
+suivant(String) : List<Arc>
+getEnsNom() : List<String>
+getEnsNoeuds() : List<Noeud>
+ajouterArc(String,String,double) : void
+estVide() : int
+toGraphviz() : String
+getNombreNoeuds() : int
+
+}
+
+@enduml

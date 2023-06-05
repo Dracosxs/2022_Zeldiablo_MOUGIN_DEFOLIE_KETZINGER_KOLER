@@ -24,7 +24,4 @@ public class Piece {
         return y;
     }
 
-    public boolean getPieceRecuperee() {
-        return pieceRecuperee;
-    }
 }
