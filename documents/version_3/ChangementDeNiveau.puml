@@ -7,8 +7,6 @@ participant "labyJeu:LabyJeu" as jeu
 participant "laby:Labyrinthe" as laby
 participant "joueur:Joueur" as joueur
 participant "monstres:ArrayList<Monstre>" as monstres
-participant "pieces:ArrayList<Piece>" as pieces
-participant "sortie:Sortie" as sortie
 
 Utilisateur -> jeu: Vérification création d'un nouveau labyrinthe
 activate jeu
