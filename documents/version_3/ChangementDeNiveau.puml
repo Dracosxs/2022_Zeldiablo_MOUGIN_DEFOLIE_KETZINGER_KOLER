@@ -1,0 +1,88 @@
+@startuml
+skinparam monochrome true
+
+actor Utilisateur
+
+participant "labyJeu:LabyJeu" as jeu
+participant "laby:Labyrinthe" as laby
+participant "joueur:Joueur" as joueur
+participant "monstres:ArrayList<Monstre>" as monstres
+participant "pieces:ArrayList<Piece>" as pieces
+participant "sortie:Sortie" as sortie
+
+Utilisateur -> jeu: Vérification création d'un nouveau labyrinthe
+activate jeu
+
+jeu -> jeu: etreFini()
+jeu -> laby: getLabyrinthe()
+activate laby
+jeu <-- laby: Labyrinthe
+deactivate laby
+loop int i, monstres.size()
+    jeu -> monstres: get(i).getX()
+    activate monstres
+    jeu <-- monstres: X
+    deactivate monstres
+    jeu -> monstres: get(i).getY()
+    activate monstres
+    jeu <-- monstres: Y
+    deactivate monstres
+    jeu -> joueur: getX()
+    activate joueur
+    jeu <-- joueur: X
+    deactivate joueur
+    jeu -> joueur: getY()
+    activate joueur
+    jeu <-- joueur: Y
+    deactivate joueur
+    jeu <-- jeu: boolean
+alt true
+    Utilisateur <-- jeu: pas de nouveau labyrinthe (personnage mort)
+    deactivate jeu
+else
+    jeu -> jeu: getLabyrinthe()
+    activate jeu
+    jeu <-- jeu: Labyrinthe
+    jeu -> laby: getJoueur()
+    activate laby
+    jeu <-- laby: Joueur
+    deactivate laby
+    jeu -> joueur: getPiecesRamassees()
+    activate joueur
+    jeu <-- joueur: piecesRamassees
+    deactivate joueur
+    alt TotalPiece != Nombre Pièces ramassées
+        Utilisateur <-- jeu: pas de nouveau labyrinthe (personnage ne possède pas toutes les pièces)
+        deactivate jeu
+    else
+        jeu -> laby: getFin()
+        activate jeu
+        activate laby
+        jeu <-- laby: boolean
+        deactivate laby
+        alt false
+            Utilisateur <-- jeu: pas de nouveau labyrinthe (personnage n'a pas atteint la fin du niveau)
+            deactivate jeu
+        else
+            jeu -> jeu: listeFichier.isEmpty()
+            activate jeu
+            jeu <-- jeu: boolean
+            alt true
+                 Utilisateur <-- jeu: pas de nouveau labyrinthe (tous les labyrinthes ont été chargés, fin du jeu)
+                 deactivate jeu
+            else
+                 jeu -> laby: new Labyrinthe(listeFichier)
+                 activate jeu
+                 jeu <-- laby: Labyrinthe
+                 Utilisateur <-- jeu: Labyrinthe
+                 deactivate jeu
+            end
+        end
+    end
+end
+
+
+deactivate jeu
+
+
+@enduml

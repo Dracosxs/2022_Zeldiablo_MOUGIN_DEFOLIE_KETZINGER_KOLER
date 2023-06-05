@@ -221,7 +221,7 @@ public class Labyrinthe {
             this.joueur.nouvellePosition(suivante[0], suivante[1]);
             for (Piece piece : ListePiece){
                 if ((this.joueur.getX() == piece.getX()) && (this.joueur.getY() == piece.getY())){
-                    this.joueur.PieceRammasee(piece.getX(), piece.getY());
+                    this.joueur.PieceRamasee(piece.getX(), piece.getY());
                     piece.setPieceRecuperee();
                     pieceRamassee(piece);
                 }
