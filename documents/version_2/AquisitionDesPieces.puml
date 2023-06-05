@@ -1,0 +1,35 @@
+@startuml
+
+actor Utilisateur
+participant "laby:Labyrinthe" as laby
+participant "j:Joueur" as J
+participant "pi:Piece" as P
+
+activate Utilisateur
+Utilisateur -> laby : deplacerPerso(action)
+activate laby
+laby -> J : getX()
+activate J
+J --> laby : X
+laby -> J : getY()
+J --> laby : Y
+deactivate J
+laby -> P : getX()
+activate P
+P --> laby : X
+laby -> P : getY()
+P --> laby : Y
+deactivate P
+laby -> J : PieceRammasee(pi.getX(), pi.getY())
+activate J
+laby <-- J:
+deactivate J
+laby -> P : pi.setPieceRecuperee()
+activate P
+laby <-- P
+deactivate P
+laby -> laby : pieceRamassee(pi)
+laby --> Utilisateur
+deactivate laby
+
+@enduml
