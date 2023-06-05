@@ -36,9 +36,12 @@ public class LabyJeu implements Jeu {
             this.labyrinthe.getSortie().afficherSortie();
             deplacementClavier(clavier);
             this.labyrinthe.joueurSurSortie();
-            if (this.labyrinthe.getFin()) {
-                this.labyrinthe = new Labyrinthe(listeFichier);
-            }
+
+
+        } else if ((!listeFichier.isEmpty()) && (TotalPiece == this.labyrinthe.getJoueur().getPiecesRammassees())){
+            this.labyrinthe = new Labyrinthe(listeFichier);
+            TotalPiece = this.getLabyrinthe().getListePiece().size();
+
         }
 
 

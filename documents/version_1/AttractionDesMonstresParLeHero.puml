@@ -5,10 +5,12 @@ participant "Laby:Labyrinthe" as Lab
 participant "d:Dijkstra" as Dijkstra
 
 activate Héros
-Héros -> Lab: Déplacement du héros
+Héros -> Lab: deplacerMonstre(i)
 activate Lab
 Lab -> Dijkstra: resoudre(generergraphe():Graphe,posdepart:String)
+activate Dijkstra
 Dijkstra --> Lab: Valeur
+deactivate Dijkstra
 Lab --> Héros: Mise à jour de la position du monstre
 
 deactivate Lab

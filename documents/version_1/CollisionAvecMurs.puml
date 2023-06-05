@@ -6,15 +6,23 @@ actor Utilisateur
 participant "Laby:Labyrinthe" as Laby
 participant "p:Perso" as P
 
-Utilisateur -> Laby: deplacerPerso(String)
+Utilisateur -> Laby: deplacerPerso(action)
 activate Laby
 Laby -> P: getX()
 activate P
-Laby <- P: X
+Laby <-- P: X
 Laby -> P: getY()
-Laby <- P: Y
+Laby <-- P: Y
 deactivate P
-Laby -> Laby: getSuivant(x,y,String)
+Laby -> Laby:getSuivant(X, Y, action)
+alt !this.mur[suivante[0]][suivante[1]]
+    Laby -> P: setX()
+        activate P
+        Laby <-- P:
+        Laby -> P: setY()
+        Laby <-- P:
+        deactivate P
+end
 Laby --> Utilisateur
 deactivate Laby
 

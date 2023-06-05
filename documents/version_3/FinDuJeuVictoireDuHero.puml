@@ -1,0 +1,35 @@
+@startuml
+skinparam monochrome true
+
+actor Utilisateur
+
+participant "laby:Labyrinthe" as laby
+participant "joueur:Joueur" as joueur
+participant "sortie:Sortie" as sortie
+
+Utilisateur -> laby: joueurSurSortie()
+activate laby
+    laby -> sortie: getX()
+    activate sortie
+    laby <-- sortie: X
+    deactivate sortie
+    laby -> sortie: getY()
+    activate sortie
+    laby <-- sortie: Y
+    deactivate sortie
+    laby -> joueur: getX()
+    activate joueur
+    laby <-- joueur: X
+    deactivate joueur
+    laby -> joueur: getY()
+    activate joueur
+    laby <-- joueur: Y
+    deactivate joueur
+    alt sortieX == joueurX && sortieY == joueurY
+         Utilisateur <-- laby: fin = true
+end
+
+deactivate laby
+
+
+@enduml
