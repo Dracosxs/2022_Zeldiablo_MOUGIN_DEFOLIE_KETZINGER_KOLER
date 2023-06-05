@@ -1,23 +1,13 @@
 @startuml
 
 class Perso{
-	- x : int
-	- y : int
+	x : int
+	y : int
 	+ Perso(dx : int, dy : int)
 	+ etrePresent(dx : int, dy : int) : boolean
 	+ getX() : int
 	+ getY() : int
-	+ nouvellePosition(dx : int, dy : int)
 }
-
-class Joueur {
-    - piecesRammassees : int
-    + Joueur(dx : int, dy : int)
-    + PieceRammasee(xPiece : int, yPiece : int)
-    + getPiecesRammassees() : int
-}
-Perso <|-- Joueur
-
 
 
 class Labyrinthe{
@@ -30,25 +20,18 @@ class Labyrinthe{
 	+ static final GAUCHE : String = "Gauche"
 	+ static final DROITE : String = "Droite"
 
-    - Perso : pj
-	- ListeMonstre : arrayList<Monstre>
-
 	+ murs : boolean[][]
 
-	+ static getSuivant(x : int, y : int, action : String) : int[]
+	static getSuivant(x : int, y : int, action : String) : int[]
 	+ Labyrinthe(nom : String)
 	+ deplacerPerso(action : String)
-	+ deplacerMonstre(i : int)
 	+ etreFini() : boolean
 	+ getLengthY() : int
 	+ getLength() : int
 	+ getMur : boolean
-	+ getPerso() : Perso
 }
 
-Labyrinthe "1" -> "*" Monstre : ListeMonstre
-Labyrinthe "1" -> "1" Joueur : joueur
-
+Labyrinthe "*" -> "1" Perso : pj
 
 class LabyDessin {
 	+ LabyDessin()
@@ -75,10 +58,6 @@ class Jeu{
 	+ etreFini() : boolean
 }
 LabyJeu ..|> Jeu
-LabyJeu "*" -> "1" Labyrinthe : labyrinthe
+LabyJeu "*" --> "1" Labyrinthe : labyrinthe
 
-class Monstre{
-    + Monstre(dx : int, dy : int)
-}
-Perso <|-- Monstre
 @enduml

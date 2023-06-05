@@ -56,14 +56,13 @@ class Labyrinthe{
     + getSortie() : Sortie
     + getSuivant(x : int, y : int, action : String) : int[]
     + genererGraphe() : GrapheListe
-    + JoueurSurSortie()
     + getPiecePresente(x : int, y : int) : boolean
 }
 
-Labyrinthe "1" -> "*" Monstre : ListeMonstre
-Labyrinthe "1" -> "1" Joueur : joueur
-Labyrinthe "1" -> "1" Sortie : sortie
-Labyrinthe "1" -> "*" Piece : ListePiece
+Labyrinthe "1" --> "*" Monstre : ListeMonstre
+Labyrinthe "1" --> "1" Joueur : joueur
+Labyrinthe "1" --> "1" Sortie : sortie
+Labyrinthe "1" --> "*" Piece : ListePiece
 
 
 class LabyDessin {
@@ -81,7 +80,6 @@ class LabyJeu{
 	+ LabyJeu()
 	+ update(secondes : double, clavier Clavier)
 	+ init()
-	+ etreFini() : boolean
 	+ getLaby() : Labyrinthe
 }
 
@@ -91,7 +89,7 @@ class Jeu{
 	+ etreFini() : boolean
 }
 LabyJeu ..|> Jeu
-LabyJeu "*" -> "1" Labyrinthe : labyrinthe
+LabyJeu "*" --> "1" Labyrinthe : labyrinthe
 
 class Sortie {
     - int xPiece;
@@ -132,13 +130,6 @@ class Valeur{
 +calculerChemin(String depart) : ArrayList<String>
 }
 
-class Sprite{
-+static Image MUR
-+static Image PJ
-+static Image MONSTRE
-+static Image PIECE
-+static Image SORTIE
-}
 
 class GrapheListe{
 +GrapheListe()
@@ -157,7 +148,21 @@ ajouterArc(String,String,double) : void
 estVide() : int
 toGraphviz() : String
 getNombreNoeuds() : int
-
 }
 
+class Noeud{
++Noeud(String)
+-List<Arc> adj
+-String nom
+equals(Object) : boolean
+ajouterArc(String , double) : void
+}
+GrapheListe "1" --> "*" Noeud : ensNoeuds
+
+class Arc{
++Arc(String, double)
+-String dest
+-double cout
+}
+Noeud "1" --> "*" Arc : adj
 @enduml
