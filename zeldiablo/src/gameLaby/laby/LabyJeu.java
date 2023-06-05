@@ -39,6 +39,7 @@ public class LabyJeu implements Jeu {
 
         } else {
             this.labyrinthe = new Labyrinthe(listeFichier);
+            TotalPiece = 0;
         }
     }
 
