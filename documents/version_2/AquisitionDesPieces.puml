@@ -20,15 +20,17 @@ P --> laby : X
 laby -> P : getY()
 P --> laby : Y
 deactivate P
-laby -> J : PieceRammasee(pi.getX(), pi.getY())
-activate J
-laby <-- J:
-deactivate J
-laby -> P : pi.setPieceRecuperee()
-activate P
-laby <-- P
-deactivate P
-laby -> laby : pieceRamassee(pi)
+alt j.getX==pi.getX() et j.getY()==pi.getY()
+    laby -> J : PieceRammasee(pi.getX(), pi.getY())
+    activate J
+    laby <-- J:
+    deactivate J
+    laby -> P : pi.setPieceRecuperee()
+    activate P
+    laby <-- P
+    deactivate P
+    laby -> laby : pieceRamassee(pi)
+end
 laby --> Utilisateur
 deactivate laby
 
