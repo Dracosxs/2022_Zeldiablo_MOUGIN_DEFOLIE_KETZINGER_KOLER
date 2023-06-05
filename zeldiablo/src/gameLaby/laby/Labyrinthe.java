@@ -218,8 +218,7 @@ public class Labyrinthe {
         // si c'est pas un mur, on effectue le deplacement
         if ((!this.murs[suivante[0]][suivante[1]]) && (!this.getMonstrePresent(suivante[0], suivante[1]))) {
             // on met a jour personnage
-            this.joueur.setX(suivante[0]);
-            this.joueur.setY(suivante[1]);
+            this.joueur.nouvellePosition(suivante[0], suivante[1]);
             for (Piece piece : ListePiece){
                 if ((this.joueur.getX() == piece.getX()) && (this.joueur.getY() == piece.getY())){
                     this.joueur.PieceRammasee(piece.getX(), piece.getY());
@@ -252,8 +251,9 @@ public class Labyrinthe {
         // si ce n'est pas un mur, on effectue le déplacement avec délai
             if ((!this.murs[suivante[0]][suivante[1]]) && (!this.getMonstrePresent(suivante[0], suivante[1]))) {
                 // on met a jour personnage
-                this.ListeMonstre.remove(i) ;
-                this.ListeMonstre.add(i, new Monstre(suivante[0], suivante[1]));
+                this.ListeMonstre.get(i).nouvellePosition(suivante[0], suivante[1]);
+                //this.ListeMonstre.remove(i) ;
+                //this.ListeMonstre.add(i, new Monstre(suivante[0], suivante[1]));
 
             }
     }
