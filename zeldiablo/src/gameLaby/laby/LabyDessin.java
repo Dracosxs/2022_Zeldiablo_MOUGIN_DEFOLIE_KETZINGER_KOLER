@@ -89,8 +89,6 @@ public class LabyDessin implements DessinJeu {
             gc.fillText(fin, canvas.getWidth() / 2 - 130, canvas.getHeight() / 2, 1000);
         }
 
-
-
         }
 
     }

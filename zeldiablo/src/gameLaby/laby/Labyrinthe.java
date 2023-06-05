@@ -456,4 +456,6 @@ public class Labyrinthe {
     public ArrayList<Piece> getListePiece() {
         return ListePiece;
     }
+
+
 }
