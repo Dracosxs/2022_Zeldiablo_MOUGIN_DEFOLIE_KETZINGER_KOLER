@@ -15,12 +15,14 @@ Laby -> P: getY()
 Laby <-- P: Y
 deactivate P
 Laby -> Laby:getSuivant(X, Y, action)
-Laby -> P: setX()
-activate P
-Laby <-- P:
-Laby -> P: setY()
-Laby <-- P:
-deactivate P
+alt !this.mur[suivante[0]][suivante[1]]
+    Laby -> P: setX()
+        activate P
+        Laby <-- P:
+        Laby -> P: setY()
+        Laby <-- P:
+        deactivate P
+end
 Laby --> Utilisateur
 deactivate Laby
 

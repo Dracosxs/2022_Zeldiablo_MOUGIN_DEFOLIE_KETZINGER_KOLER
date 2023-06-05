@@ -18,8 +18,15 @@ Laby <-- M: x
 Laby -> M: getY():Int
 Laby <-- M: y
 deactivate M
-Laby -> Laby: getSuivant(x,y,action):boulean
-Laby -> Laby: getMonstrePresent(x,y):boulean
+Laby -> Laby: getSuivant(x,y,action)
+alt !getMonstrePresent(x,y)
+    Laby -> M: setX()
+        activate M
+        Laby <-- M:
+        Laby -> M: setY()
+        Laby <-- M:
+        deactivate M
+end
 Laby --> Utilisateur
 deactivate Laby
 
